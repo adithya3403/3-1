@@ -55,9 +55,6 @@ class BinaryTreeNode {
     }
 }
 
-/*
-*/
-
 public class sp20 {
     public ArrayList<Integer> getPersonIDs(BinaryTreeNode root) {
         // Implement your code here
