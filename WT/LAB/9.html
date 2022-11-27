@@ -1,0 +1,44 @@
+<!-- 9. to read from a JSON object and display the data in a table (HTML page) -->
+
+<html>
+
+    <body>
+        <script>
+            function fun() {
+                fetch("employee.json")
+                    .then(response => response.json())
+                    .then(data => {
+                        var col = [];
+                        for (var key in data.emp[0]) {
+                            col.push(key);
+                        }
+                        console.log(col);
+                        var table = document.createElement("table");
+                        var tr = table.insertRow(-1);
+                        for (var i = 0; i < col.length; i++) {
+                            var th = document.createElement("th");
+                            th.innerHTML = col[i];
+                            tr.appendChild(th);
+                        }
+                        for (var i = 0; i < data.emp.length; i++) {
+                            var tr = table.insertRow(-1);
+                            var col = [];
+                            for (var key in data.emp[i]) {
+                                var th = document.createElement("th");
+                                th.innerHTML = data.emp[i][key];
+                                tr.appendChild(th);
+                            }
+                            console.log(col);
+                        }
+                        console.log(table);
+                        document.getElementById("hi").appendChild(table);
+                    });
+            }
+        </script>
+
+        <div id="hi">
+            <input type="button" onclick="fun()" value="Message Print">
+        </div>
+    </body>
+
+</html>
