@@ -1,0 +1,120 @@
+-----------
+# UNIT 1
+-----------
+
+ML applications:
+    image recognition, traffic prediction, email spam filtering,
+    stock market trading, language translation, object detection, etc.
+
+Supervised categories: PREDICT OUTCOME/FUTURE
+    Computer is taught by example. It is given a set of inputs and
+    the desired outputs, and it learns to map the inputs to the outputs.
+    Ex: text categorisation, predicting house price, stock price
+    prediction, face detection, weather forecasting, etc.
+    Two types:
+        Classification: (Discrete)
+            can be categorized such as yes/no, pass/fail
+            spam detection, scorecard prediction of exams, etc.
+        Regression: (Continuous)
+            is output real value such as salary, weigth, pressure...
+
+Unsupervised categories: FIND HIDDEN STRUCTURE IN DATA
+    Computer is given a set of inputs and it tries to find some
+    structure in the data.
+    Ex: fraud detection, identification of errors during entry,
+    market based analysis, ...
+    Two types:
+        Clustering:
+            group similar data points together called clusters
+            it finds a similarity among data points
+        Association:
+            identify rare items which differ from majority of data
+            Ex: bank fraud, medical error, etc.
+
+Reinforcement Learning: LEARN SERIES OF ACTIONS
+    Learning policy: A sequence of outputs
+    Learning goal: A reward function
+    Learning method: Trial and error
+    Ex: robot in a maze, playing a game, self-driving cars, etc.
+
+Batch Learning:
+    Trained using all the available data
+    It will take a lot of time and resources, so is done offline
+    also called as offline Learning
+    Ex: training a model to predict house prices
+
+Online Learning:
+    Train the system incrementally by feeding it data instances
+    It is good for systems that receive data as a continuous flow
+    training happens by feeding data in small groups
+    each step is fast and cheap, so can be done online
+    Ex: stock prices, predictions...
+
+ML challenges:
+    Insufficient quantity of training data
+    Poor-quality data
+    Irrelevant features
+    Overfitting the training data
+    Underfitting the training data
+
+-----------
+# UNIT 2
+-----------
+
+Types of Data:
+    Qualitative:
+        counted in form of numbers, eg: gender, fav color, fav place, ...
+            Nominal: labels for existing data(hair color, gender, nationality)
+            Ordinal: rankings(reviews on scale 1-5, grades in exams: A, B, C)
+    Quantitative: 
+        includes statistical data analysis or numeric data, eg: height, temperature
+            Discrete: number of students in a class, days in a week, ...
+            Continuous: height of a person, spee dof vehicle, ...
+
+Descriptive Statistics: summarize data through numbers
+    Central Tendency: one number summary of a set of data
+        Mean: average of all the values(arithmetic average)
+        Median: middle value of the data(positional average)
+        Mode: most frequent value of the data
+    Dispersion / Data variability: how spread out the data is
+        Range: max-min in a dataset
+        Variance: how far each number is from the mean
+            high variance: spread out, low variance: points are very close
+        Standard Deviation: square root of the variance
+            low stddev: clustered around mean, high stddev: spread out
+        Inter Quartile Range: IQR=Q3-Q1
+            Q1: 25th percentile, Q2: median, Q3: 75th percentile, IQR=Q3-Q1
+        Mean abs Dev: avg distance between each point and mean of the data
+
+Box-Plot:
+    type of graph that help visualize the five-number summary
+    it shows the min, max, median(Q2), Q1 and Q3
+    the whiskers are the two lines outside the box
+    maximum=Q3+1.5*IQR, minimum=Q1-1.5*IQR
+    Outlier:
+        data points that are far from the rest of the data
+
+Covariance: direction of linear relationship bw two variables
+    lies between -infinity and +infinity
+
+Correlation: strength of linear relationship bw two continuous variables
+    lies between -1 and +1
+    +1: perfect positive correlation
+    -1: perfect negative correlation
+    0: no correlation
+
+Causation: changes in one variable brings about changes in another variable
+    the two variables are correlated with each other
+
+Data Preprocessing: technique used to transform raw to efficient data
+    Data Cleaning: removing missing values, outliers, etc.
+    Data Integration: combining data from multiple sources
+    Data Transformation: scaling, normalization, etc.
+    Data Reduction: dimensionality reduction, feature selection, etc.
+
+Data visualization: graphical representation of data
+    Bar graph: graphs that can be used to compare data
+    Histogram: graphs that is continuous type of chart
+    Scatter plot: uses dots to represent values for two different variables
+    Pie chart: divides into slices to show proportions
+    

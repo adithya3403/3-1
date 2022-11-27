@@ -1,0 +1,33 @@
+Date: 17-10-2022
+------------------------------------------------------------------
+                UNIT 3
+              REGRESSION
+------------------------------------------------------------------
+
+Meaning of Regression:
+    Regression is the relationship between one dependent variable and a series of independent variables.
+    It helps to determine if independent variable does a good job in predicting the dependent variable.
+    Which independent variable plays a significant role in predicting the dependent variable.
+    The dictionary meaning of Regression is : "stepping back or going back"
+    Examples of Regression:
+        1. Prediction of rain using temperature and other factors
+        2. Determining market trends 
+        3. House Price Prediction
+        4. Flight price prediction
+        5. Prediction of road accidents due to rash driving
+    
+Regression Analysis:
+    Regression Analysis is a statistical method to model the relationship between a dependent variable and 
+    one or more independent variables. 
+    Example for Regression Analysis:
+        Suppose there is a marketing company A who does various advertisements every year and gets sales on that.
+            advertisements     sales 
+            $ 90              $ 1000 
+            $ 120             $ 1300
+            $ 150             $ 1800
+            $ 100             $ 1200
+            $ 130             $ 1380
+            $ 200                ?
+        Now the company wants to do the advertisement of $200 in the year 2022 and wants to know the 
+        prediction about sales for this year. To solve such type of prediction in machine learning, we need 
+        to use regression analysis. Thus, regression is considered as an explanation for causation.
