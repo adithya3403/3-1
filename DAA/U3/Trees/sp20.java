@@ -38,10 +38,6 @@ Sample Output-2:
 ----------------
 [44, 55, 66, 77]
 
-*/
-
-import java.util.*;
-
 // TreeNode for reference
 
 class BinaryTreeNode {
@@ -54,6 +50,9 @@ class BinaryTreeNode {
         right = null;
     }
 }
+*/
+
+import java.util.*;
 
 public class sp20 {
     public ArrayList<Integer> getPersonIDs(BinaryTreeNode root) {
