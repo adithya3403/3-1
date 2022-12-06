@@ -1,0 +1,8 @@
+```GRADIENT```
+
+A gradient measures how much the output of a function changes if you change the inputs a little bit.
+In math terms, a graident is a partial derivative with respect to its inputs.
+In ML, a gradient is a derivative of a fucntion that has more than ine input variable.
+The gradient simply measures the change in all weights with regard to the change in error.
+
+Gradient descent: https://static.javatpoint.com/tutorial/machine-learning/images/gradient-descent-in-machine-learning1.png
