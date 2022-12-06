@@ -1,0 +1,1 @@
+### i) to read from a JSON object and display the data in a table (HTML page)
