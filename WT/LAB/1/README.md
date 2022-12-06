@@ -11,3 +11,7 @@ For example, if you input 'The Quick Brown Fox' the output should be 'tHEqUICKbR
 - i) to read from a JSON object and display the data in a table (HTML page)
 - j) that takes name, rollno, marks from user from a form and on form submission displays
 them in a tabular format, with GPA (like a marks sheet)
+
+
+## j.html
+http://htmlpreview.github.io/?https://github.com/adithya3403/3-1/blob/main/WT/LAB/1/j.html
