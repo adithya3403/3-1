@@ -10,9 +10,7 @@ public class dns {
         try {
             InetAddress ip = InetAddress.getByName(domain);
             System.out.println("IP address: " + ip.getHostAddress());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) { System.out.println(e); }
         sc.close();
     }
 }
