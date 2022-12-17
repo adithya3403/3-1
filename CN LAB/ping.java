@@ -12,10 +12,7 @@ public class ping {
         Process p = Runtime.getRuntime().exec("ping " + ip.getHostAddress());
         BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
-        }
-        in.close();
+        while ((inputLine = in.readLine()) != null) System.out.println(inputLine);
         sc.close();
     }
 }
