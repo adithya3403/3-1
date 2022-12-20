@@ -60,26 +60,24 @@ class sp45 {
         // implement your logic here.
         // solve using dp
         int n = cost.length;
-        int dp[][] = new int[n][1 << n];
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(dp[i], Integer.MAX_VALUE);
-        }
-        dp[0][1] = 0;
-        for (int mask = 1; mask < (1 << n); mask++) {
-            for (int i = 0; i < n; i++) {
-                if ((mask & (1 << i)) != 0) {
-                    for (int j = 0; j < n; j++) {
-                        if (i != j && (mask & (1 << j)) != 0) {
-                            dp[i][mask] = Math.min(dp[i][mask], dp[j][mask ^ (1 << i)] + cost[j][i]);
-                        }
-                    }
-                }
+        int[][] dp = new int[1 << n][n];
+        for (int[] row : dp)
+            Arrays.fill(row, -1);
+        return tsp(cost, dp, 0, 0);
+    }
+
+    static int tsp(int[][] arr, int[][] dp, int mask, int pos) {
+        if (mask == (1 << arr.length) - 1)
+            return arr[pos][0];
+        if (dp[mask][pos] != -1)
+            return dp[mask][pos];
+        int ans = Integer.MAX_VALUE;
+        for (int city = 0; city < arr.length; city++) {
+            if ((mask & (1 << city)) == 0) {
+                int newAns = arr[pos][city] + tsp(arr, dp, mask | (1 << city), city);
+                ans = Math.min(ans, newAns);
             }
         }
-        int res = Integer.MAX_VALUE;
-        for (int i = 1; i < n; i++) {
-            res = Math.min(res, dp[i][(1 << n) - 1] + cost[i][0]);
-        }
-        return res;
+        return dp[mask][pos] = ans;
     }
 }
