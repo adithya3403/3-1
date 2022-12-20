@@ -1,5 +1,4 @@
 // sp45 Traveller 
-// Grade : 0/100
 
 /*
 
