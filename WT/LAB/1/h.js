@@ -1,28 +1,16 @@
 // 8. Write a JavaScript program to implement Bubble Sort.
 
-function swap(arr, first_Index, second_Index) {
-    var temp = arr[first_Index];
-    arr[first_Index] = arr[second_Index];
-    arr[second_Index] = temp;
-}
-
-function bubble_Sort(arr) {
-    var len = arr.length,
-        i, j, stop;
-    for (i = 0; i < len; i++) {
-        for (j = 0, stop = len - i; j < stop; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr, j, j + 1);
-            }
+var arr = [3, 0, 2, 5, -1, 4, 1];
+console.log("Given array: ", arr);
+var n = arr.length;
+for (var i = 0; i < n - 1; i++)
+    for (var j = 0; j < n - i - 1; j++)
+        if (arr[j] > arr[j + 1]) {
+            var temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
         }
-    }
-    return arr;
-}
+console.log("Sorted array: ", arr);
 
-myArray = [3, 0, 2, 5, -1, 4, 1];
-console.log("Original array: " + myArray);
-var sortedArray = bubble_Sort(myArray);
-console.log("Sorted array: " + sortedArray);
-
-// Original array: 3,0,2,5,-1,4,1
-// Sorted array: -1,0,1,2,3,4,5
+// Given array:  [ 3, 0, 2, 5, -1, 4, 1 ]
+// Sorted array:  [ -1, 0, 1, 2, 3, 4, 5 ]
