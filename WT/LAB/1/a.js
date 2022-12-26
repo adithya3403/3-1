@@ -3,17 +3,14 @@
 const readline = require('readline');
 var RL = readline.createInterface(process.stdin, process.stdout);
 RL.question('Please Enter Text:  ', (name) => {
-    let x = name;
     let y = "";
-    for (let i = 0; i < x.length; i++) {
-        if (x.charAt(i) >= 'A' && x.charAt(i) <= 'Z')
-            y = y + x.charAt(i).toLowerCase();
-        else if (x.charAt(i) >= 'a' && x.charAt(i) <= 'z')
-            y = y + x.charAt(i).toUpperCase();
+    for (let i = 0; i < name.length; i++) {
+        if (name[i] == ' ') y += '';
+        else if (name[i] == name[i].toUpperCase()) y += name[i].toLowerCase();
+        else y += name[i].toUpperCase();
     }
-
-    console.log(`Output is is ${y}`);
-
+    console.log("Output is : " + y);
+    RL.close();
 });
 
 
