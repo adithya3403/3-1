@@ -1,20 +1,18 @@
 // 2. write a js program to find the most frequent element of an array
 
-var arr1 = [3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
-var mf = 1;
-var m = 0;
-var item;
-for (var i = 0; i < arr1.length - 1; i++) {
-    for (var j = i; j < arr1.length; j++) {
-        if (arr1[i] == arr1[j])
-            m++;
-        if (mf < m) {
-            mf = m;
-            item = arr1[i];
-        }
+var list = [1, 4, 7, 8, 7, 4, 1, 5, 2, 1];
+var max = 0;
+var item = list[0];
+for (var l = 0; l < list.length; l++) {
+    var count = 0;
+    for (var r = l; r < list.length; r++) {
+        if (list[l] == list[r]) count++;
     }
-    m = 0;
+    if (count > max) {
+        max = count;
+        item = list[l];
+    }
 }
-console.log(item + " ( " + mf + " times ) ");
+console.log(item + " (" + max + " times )");
 
-// a ( 5 times )
+// 1 ( 3 times )
