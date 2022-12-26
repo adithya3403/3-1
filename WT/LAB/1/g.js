@@ -1,27 +1,17 @@
 // 7. Write a JavaScript program to sort a list of elements using Quick sort
 
-function quick_Sort(origArray) {
-    if (origArray.length <= 1) return origArray;
-    var left = [];
-    var right = [];
-    var newArray = [];
-    var pivot = origArray.pop();
-    var length = origArray.length;
-    for (var i = 0; i < length; i++) {
-        if (origArray[i] <= pivot) {
-            left.push(origArray[i]);
-        } else {
-            right.push(origArray[i]);
-        }
+var arr = [5, 2, 4, 1, 3, 7, 6, 8];
+var quickSort = function (arr) {
+    if (arr.length <= 1) return arr;
+    var pivot = arr[0], left = [], right = [];
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] < pivot) left.push(arr[i]);
+        else right.push(arr[i]);
     }
-    return newArray.concat(quick_Sort(left), pivot, quick_Sort(right));
+    return quickSort(left).concat(pivot, quickSort(right));
 }
+console.log("Given array: ", arr);
+console.log("Sorted array: ", quickSort(arr));
 
-var myArray = [3, 0, 2, 5, -1, 4, 1];
-
-console.log("Original array: " + myArray);
-var sortedArray = quick_Sort(myArray);
-console.log("Sorted array: " + sortedArray);
-
-// Original array: 3,0,2,5,-1,4,1
-// Sorted array: -1,0,1,2,3,4,5
+// Given array:  [ 5, 2, 4, 1, 3, 7, 6, 8 ]
+// Sorted array:  [ 1, 2, 3, 4, 5, 6, 7, 8 ]
