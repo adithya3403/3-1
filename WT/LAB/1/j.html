@@ -6,10 +6,6 @@ sheet) -->
 
     <head>
         <title>Student-Marks-Sheet</title>
-        <!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </head>
 
     <body>
@@ -59,6 +55,10 @@ sheet) -->
                         <tr>
                             <td>${document.getElementById('sub3name').value} Marks </td>
                             <td>${document.getElementById('marks3').value}</td>
+                        </tr>
+                        <tr>
+                            <td> GPA </td>
+                            <td>${((parseInt(document.getElementById('marks1').value) + parseInt(document.getElementById('marks2').value) + parseInt(document.getElementById('marks3').value)) / 30).toFixed(2)}</td>
                         </tr>
                     </table>
                 </div>`;
