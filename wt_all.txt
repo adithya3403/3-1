@@ -12,31 +12,28 @@ RL.question('Please Enter Text:  ', (name) => {
     console.log("Output is : " + y)
     RL.close()
 })
-
------
+----------
 // 1b. write a js program to find the most frequent element of an array
 var list = [1, 4, 7, 8, 7, 4, 1, 5, 2, 1]
 var max = 0, item = list[0]
 for (var l = 0; l < list.length; l++) {
-    var count = 0
+    var c = 0
     for (var r = l; r < list.length; r++) {
-        if (list[l] == list[r]) count++
+        if (list[l] == list[r]) c++
     }
-    if (count > max) {
-        max = count
+    if (c > max) {
+        max = c
         item = list[l]
     }
 }
 console.log(item + " (" + max + " times )") // 1 ( 3 times )
-
------
+----------
 // 1c. write a js program to remove duplicates from an array
 var list = [1, 2, 2, 4, 5, 4, 7, 8, 7, 3, 6], unq = []
 for (var l = 0; l < list.length; l++)
     if (unq.indexOf(list[l]) == -1) unq.push(list[l])
 console.log("Unique List: ", unq) // Unique List:  [1, 2, 4, 5, 7, 8, 3, 6]
-
------
+----------
 // 1d. write a js program to perform binary search
 var list = [11, 15, 23, 24, 36, 58, 62]
 var binarySearch = function (list, l, r, x) {
@@ -49,21 +46,18 @@ var binarySearch = function (list, l, r, x) {
     return "Not Found"
 }
 console.log(binarySearch(list, 0, list.length - 1, 58)) // Found at index:  5
-
------
+----------
 // 1e. Write a JavaScript program to list the properties of a JavaScript object.
 let list = { name: 'Jack', age: 25, college: 'KMIT', year: 3 }
 console.log(Object.keys(list)) // [ 'name', 'age', 'college', 'year' ]
-
------
+----------
 // 1f. Write a JavaScript function to check whether an object contains given property.
 let object = { name: 'Jack', age: 25, college: 'KMIT', year: 3 }
 console.log(object.hasOwnProperty('name')) // true
 console.log('age' in object) // true
 console.log(object.college) // KMIT
-console.log(object.year) // 3
-
------
+console.log(object.gpa) // undefined
+----------
 // 1g. Write a JavaScript program to sort a list of elements using Quick sort
 var arr = [5, 2, 4, 1, 3, 7, 6, 8]
 var quickSort = function (arr) {
@@ -77,8 +71,7 @@ var quickSort = function (arr) {
 }
 console.log("Sorted array: ", quickSort(arr));
 // Sorted array:  [ 1, 2, 3, 4, 5, 6, 7, 8 ]
-
------
+----------
 // 1h. Write a JavaScript program to implement Bubble Sort.
 var arr = [3, 0, 2, 5, -1, 4, 1], n = arr.length
 for (var i = 0; i < n - 1; i++)
@@ -90,8 +83,7 @@ for (var i = 0; i < n - 1; i++)
         }
 console.log("Sorted array: ", arr);
 // Sorted array:  [ -1, 0, 1, 2, 3, 4, 5 ]
-
------
+----------
 <!-- 1i. to read from a JSON object and display the data in a table (HTML page) -->
 <html>
     <head>
@@ -131,72 +123,68 @@ console.log("Sorted array: ", arr);
         }
     </script>
 </html>
-
------
+----------
 <!-- 1j. Create a JS application that accepts the student's roll number, name, and marks and, when the form has been
 submitted, displays the student's name, roll number, and marks in a tabular format along with their GPA ( like a marks
 sheet) -->
 <html>
     <head>
+        <title>Doc</title>
         <style>
             table, th, td {
                 border: 1px solid black;
                 border-collapse: collapse;
             }
         </style>
-        <title>Student-Marks-Sheet</title>
-    </head>
-    <body>
-        <div id="mydata"></div>
-        <div id="myformdiv">
-            <h3> Enter Student Details and Marks</h3>
-            <form id="myForm" method="post">
-                <label>Student name:</label>
-                <input type="text" id="sname"><br> <br>
-                <label>Roll number:&nbsp; </label>
-                <input type="text" id="rollno"><br><br>
-                <label>subject1 Marks:</label>
-                <input type="text" id="sub1name" placeholder="sub1">
-                <input type="number" id="marks1"><br><br>
-                <label>subject2 Marks:</label>
-                <input type="text" id="sub2name" placeholder="sub2">
-                <input type="number" id="marks2"><br><br>
-                <label>subject3 Marks:</label>
-                <input type="text" id="sub3name" placeholder="sub3">
-                <input type="number" id="marks3"><br><br>
-                <input type="button" onclick="myFunction()" value="Submit">
-            </form>
-        </div>
         <script>
-            function myFunction() {
-                document.getElementById('myformdiv').style.display = 'none';
-                let myInfo = `
-                <div class='sdetails'>
-                    <h3> Student Details and Marks</h3>
-                    <table class=table-bordered table-primary>
-                        <tr><td class="bg-primary"> Name</td>
-                            <td>${document.getElementById('sname').value}</td></tr>
-                        <tr><td class="bg-primary"> Hall-ticket Number:  </td>
-                            <td>${document.getElementById('rollno').value}</td></tr>
-                        <tr><td>${document.getElementById('sub1name').value} Marks </td>
-                            <td>${document.getElementById('marks1').value}</td></tr>
-                        <tr><td>${document.getElementById('sub2name').value} Marks </td>
-                            <td>${document.getElementById('marks2').value}</td></tr>
-                        <tr><td>${document.getElementById('sub3name').value} Marks </td>
-                            <td>${document.getElementById('marks3').value}</td></tr>
-                        <tr><td> GPA </td>
-                            <td>${((parseInt(document.getElementById('marks1').value) + 
-                                    parseInt(document.getElementById('marks2').value) + 
-                                    parseInt(document.getElementById('marks3').value)) / 30).toFixed(2)}</td></tr>
-                    </table>
-                </div>`;
-                document.getElementById('mydata').innerHTML = myInfo;
+            function myfun() {
+                document.getElementById('output').innerHTML=`
+                    <div id="details">
+                        <h4>Student details</h4>
+                        <table class="table-bordered table-primary">
+                            <tr><td>name</td>
+                                <td>${document.getElementById('name').value}</td></tr>
+                            <tr><td>roll no</td>
+                                <td>${document.getElementById('rollno').value}</td></tr>
+                            <tr><td>${document.getElementById('sub1').value}</td>
+                                <td>${document.getElementById('marks1').value}</td></tr>
+                            <tr><td>${document.getElementById('sub2').value}</td>
+                                <td>${document.getElementById('marks2').value}</td></tr>
+                            <tr><td>${document.getElementById('sub3').value}</td>
+                                <td>${document.getElementById('marks3').value}</td></tr>
+                            <tr><td>CGPA</td>
+                                <td>${((parseInt(document.getElementById('marks1').value) + 
+                                        parseInt(document.getElementById('marks2').value) + 
+                                        parseInt(document.getElementById('marks3').value))/30).toFixed(2)}</td></tr>
+                        </table>
+                    </div>
+                `;
             }
         </script>
+    </head>
+    <body>
+        <div id="form">
+            <h4>Enter student details:</h4>
+            <form id="form">
+                <label>Student name:</label>
+                <input type="text" id="name"><br>
+                <label>Roll number:&nbsp; </label>
+                <input type="text" id="rollno"><br>
+                <label>subject1 Marks:</label>
+                <input type="text" id="sub1" placeholder="sub1">
+                <input type="number" id="marks1"><br>
+                <label>subject2 Marks:</label>
+                <input type="text" id="sub2" placeholder="sub2">
+                <input type="number" id="marks2"><br>
+                <label>subject3 Marks:</label>
+                <input type="text" id="sub3" placeholder="sub3">
+                <input type="number" id="marks3"><br>
+                <input type="button" onclick="myfun()" value="Submit">
+        </div>
+        <div id="output"></div>
     </body>
 </html>
-
------
+----------
 <!-- 2. Write JS code in an HTML page such that based on location selected by the user an AJAX request is made and weather
 details for that location are fetched and displayed, zipcode=500047 -->
 <html>
@@ -263,8 +251,7 @@ details for that location are fetched and displayed, zipcode=500047 -->
         </div>
     </body>
 </html>
-
------
+----------
 // 3. Write a Node JS program that accepts a port from the user and runs a node server at that port
 var http = require('http')
 var server = http.createServer(function (req, res) {
@@ -276,24 +263,18 @@ var server = http.createServer(function (req, res) {
         res.writeHead(200, { 'Content-Type': 'text/html' })
         res.write('<html><body><p>This is student Page</p></body></html>')
         res.end()
-    } else if (req.url == "/admin") {
-        res.writeHead(200, { 'Content-Type': 'text/html' })
-        res.write('<html><body><p>This is admin Page</p></body></html>')
-        res.end()
     } else res.end('Invalid Request!')
 })
 server.listen(8000)
 console.log('Server is running at port 8000');
-
------
+----------
 // 4. Write a NodeJS program to read from a file and display the content on screen "file.txt"
 // Content in file.txt: Hello World
 try {
     var data = require('fs').readFileSync('file.txt', 'utf8')
     console.log(data)
 } catch (e) { console.log('Error:', e.stack) }
-
------
+----------
 // 5. Create a NodeJS programme that allows users to submit text and a file name, 
 // and if the file already exists, appends the text to the file. 
 // If not, make a fresh file and include the text in it.
