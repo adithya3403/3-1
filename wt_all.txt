@@ -1,0 +1,303 @@
+// 1a. which accepts a string as input and swap the case of each character. 
+// Input: The Quick Brown Fox, Output: tHEqUICKbROWNfOX
+const readline = require('readline')
+var RL = readline.createInterface(process.stdin, process.stdout)
+RL.question('Please Enter Text:  ', (name) => {
+    let y = ""
+    for (let i = 0; i < name.length; i++) {
+        if (name[i] == ' ') y += ''
+        else if (name[i] == name[i].toUpperCase()) y += name[i].toLowerCase()
+        else y += name[i].toUpperCase()
+    }
+    console.log("Output is : " + y)
+    RL.close()
+})
+
+-----
+// 1b. write a js program to find the most frequent element of an array
+var list = [1, 4, 7, 8, 7, 4, 1, 5, 2, 1]
+var max = 0, item = list[0]
+for (var l = 0; l < list.length; l++) {
+    var count = 0
+    for (var r = l; r < list.length; r++) {
+        if (list[l] == list[r]) count++
+    }
+    if (count > max) {
+        max = count
+        item = list[l]
+    }
+}
+console.log(item + " (" + max + " times )") // 1 ( 3 times )
+
+-----
+// 1c. write a js program to remove duplicates from an array
+var list = [1, 2, 2, 4, 5, 4, 7, 8, 7, 3, 6], unq = []
+for (var l = 0; l < list.length; l++)
+    if (unq.indexOf(list[l]) == -1) unq.push(list[l])
+console.log("Unique List: ", unq) // Unique List:  [1, 2, 4, 5, 7, 8, 3, 6]
+
+-----
+// 1d. write a js program to perform binary search
+var list = [11, 15, 23, 24, 36, 58, 62]
+var binarySearch = function (list, l, r, x) {
+    while (l <= r) {
+        var mid = Math.floor((l + r) / 2)
+        if (list[mid] == x) return "Found at index: " + mid
+        else if (list[mid] < x) l = mid + 1
+        else r = mid - 1
+    }
+    return "Not Found"
+}
+console.log(binarySearch(list, 0, list.length - 1, 58)) // Found at index:  5
+
+-----
+// 1e. Write a JavaScript program to list the properties of a JavaScript object.
+let list = { name: 'Jack', age: 25, college: 'KMIT', year: 3 }
+console.log(Object.keys(list)) // [ 'name', 'age', 'college', 'year' ]
+
+-----
+// 1f. Write a JavaScript function to check whether an object contains given property.
+let object = { name: 'Jack', age: 25, college: 'KMIT', year: 3 }
+console.log(object.hasOwnProperty('name')) // true
+console.log('age' in object) // true
+console.log(object.college) // KMIT
+console.log(object.year) // 3
+
+-----
+// 1g. Write a JavaScript program to sort a list of elements using Quick sort
+var arr = [5, 2, 4, 1, 3, 7, 6, 8]
+var quickSort = function (arr) {
+    if (arr.length <= 1) return arr
+    var pivot = arr[0], left = [], right = []
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] < pivot) left.push(arr[i])
+        else right.push(arr[i])
+    }
+    return quickSort(left).concat(pivot, quickSort(right))
+}
+console.log("Sorted array: ", quickSort(arr));
+// Sorted array:  [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+
+-----
+// 1h. Write a JavaScript program to implement Bubble Sort.
+var arr = [3, 0, 2, 5, -1, 4, 1], n = arr.length
+for (var i = 0; i < n - 1; i++)
+    for (var j = 0; j < n - i - 1; j++)
+        if (arr[j] > arr[j + 1]) {
+            var temp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j + 1] = temp
+        }
+console.log("Sorted array: ", arr);
+// Sorted array:  [ -1, 0, 1, 2, 3, 4, 5 ]
+
+-----
+<!-- 1i. to read from a JSON object and display the data in a table (HTML page) -->
+<html>
+    <head>
+        <title>Convert JSON Data to HTML Table</title>
+        <style>table,td,th {border: solid 2px #DDD;}</style>
+    </head>
+    <body>
+        <input type="button" onclick="CreateTableFromJSON()" value="Create Table From JSON" />
+        <p id="showData"></p>
+    </body>
+    <script>
+        function CreateTableFromJSON() {
+            fetch("s1.json").then(response => response.json()).then(data => {
+                var col = []
+                for (var i = 0; i < data.student.length; i++)
+                    for (var key in data.student[i])
+                        if (col.indexOf(key) === -1) col.push(key)
+                console.log(col)
+                var table = document.createElement("table")
+                var tr = table.insertRow(-1)
+                for (var i = 0; i < col.length; i++) {
+                    var th = document.createElement("th")
+                    th.innerHTML = col[i]
+                    tr.appendChild(th)
+                }
+                for (var i = 0; i < data.student.length; i++) {
+                    tr = table.insertRow(-1)
+                    for (var j = 0; j < col.length; j++) {
+                        var tabCell = tr.insertCell(-1)
+                        tabCell.innerHTML = data.student[i][col[j]]
+                    }
+                }
+                var divContainer = document.getElementById("showData")
+                divContainer.innerHTML = ""
+                divContainer.appendChild(table)
+            })
+        }
+    </script>
+</html>
+
+-----
+<!-- 1j. Create a JS application that accepts the student's roll number, name, and marks and, when the form has been
+submitted, displays the student's name, roll number, and marks in a tabular format along with their GPA ( like a marks
+sheet) -->
+<html>
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+        <title>Student-Marks-Sheet</title>
+    </head>
+    <body>
+        <div id="mydata"></div>
+        <div id="myformdiv">
+            <h3> Enter Student Details and Marks</h3>
+            <form id="myForm" method="post">
+                <label>Student name:</label>
+                <input type="text" id="sname"><br> <br>
+                <label>Roll number:&nbsp; </label>
+                <input type="text" id="rollno"><br><br>
+                <label>subject1 Marks:</label>
+                <input type="text" id="sub1name" placeholder="sub1">
+                <input type="number" id="marks1"><br><br>
+                <label>subject2 Marks:</label>
+                <input type="text" id="sub2name" placeholder="sub2">
+                <input type="number" id="marks2"><br><br>
+                <label>subject3 Marks:</label>
+                <input type="text" id="sub3name" placeholder="sub3">
+                <input type="number" id="marks3"><br><br>
+                <input type="button" onclick="myFunction()" value="Submit">
+            </form>
+        </div>
+        <script>
+            function myFunction() {
+                document.getElementById('myformdiv').style.display = 'none';
+                let myInfo = `
+                <div class='sdetails'>
+                    <h3> Student Details and Marks</h3>
+                    <table class=table-bordered table-primary>
+                        <tr><td class="bg-primary"> Name</td>
+                            <td>${document.getElementById('sname').value}</td></tr>
+                        <tr><td class="bg-primary"> Hall-ticket Number:  </td>
+                            <td>${document.getElementById('rollno').value}</td></tr>
+                        <tr><td>${document.getElementById('sub1name').value} Marks </td>
+                            <td>${document.getElementById('marks1').value}</td></tr>
+                        <tr><td>${document.getElementById('sub2name').value} Marks </td>
+                            <td>${document.getElementById('marks2').value}</td></tr>
+                        <tr><td>${document.getElementById('sub3name').value} Marks </td>
+                            <td>${document.getElementById('marks3').value}</td></tr>
+                        <tr><td> GPA </td>
+                            <td>${((parseInt(document.getElementById('marks1').value) + 
+                                    parseInt(document.getElementById('marks2').value) + 
+                                    parseInt(document.getElementById('marks3').value)) / 30).toFixed(2)}</td></tr>
+                    </table>
+                </div>`;
+                document.getElementById('mydata').innerHTML = myInfo;
+            }
+        </script>
+    </body>
+</html>
+
+-----
+<!-- 2. Write JS code in an HTML page such that based on location selected by the user an AJAX request is made and weather
+details for that location are fetched and displayed, zipcode=500047 -->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <title>Weather App</title>
+        <script>
+            function getWeather() {
+                let request = new XMLHttpRequest()
+                let zip = document.getElementById('tb1').value
+                request.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + zip +
+                    '&appid=93f26e3c57081a6210de53b8dcfdfea4', true)
+                request.onload = function () {
+                    if (request.status >= 200 && request.status < 400) {
+                        let data = JSON.parse(request.responseText)
+                        console.log(data)
+                        var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+                        document.getElementById('temp').innerHTML = data.main.temp + 'F'
+                        document.getElementById('country').innerHTML = data.sys.country
+                        document.getElementById('city').innerHTML = data.name
+                        let tim = new Date(data.sys.sunrise * 1000)
+                        document.getElementById('sunrise').innerHTML = tim
+                        let tim1 = new Date(data.sys.sunset * 1000)
+                        document.getElementById('sunset').innerHTML = tim1
+                        document.getElementById('windspeed').innerHTML = data.wind.speed
+                        document.getElementById('humid').innerHTML = data.main.humidity
+                    } else console.log('failed connecting')
+                }
+                request.onerror = function () { console.log(" Error ") }
+                request.send()
+            }
+        </script>
+    </head>
+    <body>
+        <br>
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h1>Enter zipcode to get weather report</h1>
+                <input type="text" placeholder="Enter zipcode" id="tb1"><br><br>
+                <button type="submit" onclick="getWeather()">Click me</button>
+            </div>
+            <table class="table-bordered table-striped">
+                <thead>
+                    <tr><th>Key</th>
+                        <th>Value</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Country</td>
+                        <td><label id="country"></label></td></tr>
+                    <tr><td>City</td>
+                        <td><label id="city"></label></td></tr>
+                    <tr><td>Temperature</td>
+                        <td><label id="temp"></label></td></tr>
+                    <tr><td>Humidity</td>
+                        <td><label id="humid"></label></td></tr>
+                    <tr><td>Sunrise</td>
+                        <td><label id="sunrise"></label></td></tr>
+                    <tr><td>Sunset</td>
+                        <td><label id="sunset"></label></td></tr>
+                    <tr><td>WindSpeed</td>
+                        <td><label id="windspeed"></label></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+
+-----
+// 3. Write a Node JS program that accepts a port from the user and runs a node server at that port
+var http = require('http')
+var server = http.createServer(function (req, res) {
+    if (req.url == '/') {
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.write('<html><body><p>This is home Page</p></body></html>')
+        res.end()
+    } else if (req.url == "/student") {
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.write('<html><body><p>This is student Page</p></body></html>')
+        res.end()
+    } else if (req.url == "/admin") {
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.write('<html><body><p>This is admin Page</p></body></html>')
+        res.end()
+    } else res.end('Invalid Request!')
+})
+server.listen(8000)
+console.log('Server is running at port 8000');
+
+-----
+// 4. Write a NodeJS program to read from a file and display the content on screen "file.txt"
+// Content in file.txt: Hello World
+try {
+    var data = require('fs').readFileSync('file.txt', 'utf8')
+    console.log(data)
+} catch (e) { console.log('Error:', e.stack) }
+
+-----
+// 5. Create a NodeJS programme that allows users to submit text and a file name, 
+// and if the file already exists, appends the text to the file. 
+// If not, make a fresh file and include the text in it.
+require('fs').appendFile('file.txt', `Learn Node FS module \r\n`, function (err) {
+    if (err) throw err
+    console.log('File is Appended successfully')
+});
