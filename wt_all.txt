@@ -18,11 +18,10 @@ var list = [1, 4, 7, 8, 7, 4, 1, 5, 2, 1]
 var max = 0, item = list[0]
 for (var l = 0; l < list.length; l++) {
     var c = 0
-    for (var r = l; r < list.length; r++) {
+    for (var r = l; r < list.length; r++)
         if (list[l] == list[r]) c++
-    }
     if (c > max) {
-        max = c
+        max, item
         item = list[l]
     }
 }
@@ -85,6 +84,13 @@ console.log("Sorted array: ", arr);
 // Sorted array:  [ -1, 0, 1, 2, 3, 4, 5 ]
 ----------
 <!-- 1i. to read from a JSON object and display the data in a table (HTML page) -->
+s1.json:
+{ "student": [
+        { "name": "Bhavana", "age": 20, "college": "KMIT", "year": 3 },
+        { "name": "Ram", "age": 21, "college": "JNTU", "year": 4 },
+        { "name": "John", "age": 26, "college": "KMEC", "year": 1 }
+]}
+index.html:
 <html>
     <head>
         <title>Convert JSON Data to HTML Table</title>
@@ -185,73 +191,6 @@ sheet) -->
     </body>
 </html>
 ----------
-<!-- 2. Write JS code in an HTML page such that based on location selected by the user an AJAX request is made and weather
-details for that location are fetched and displayed, zipcode=500047 -->
-<html>
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <title>Weather App</title>
-        <script>
-            function getWeather() {
-                let request = new XMLHttpRequest()
-                let zip = document.getElementById('tb1').value
-                request.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=' + zip +
-                    '&appid=93f26e3c57081a6210de53b8dcfdfea4', true)
-                request.onload = function () {
-                    if (request.status >= 200 && request.status < 400) {
-                        let data = JSON.parse(request.responseText)
-                        console.log(data)
-                        var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-                        document.getElementById('temp').innerHTML = data.main.temp + 'F'
-                        document.getElementById('country').innerHTML = data.sys.country
-                        document.getElementById('city').innerHTML = data.name
-                        let tim = new Date(data.sys.sunrise * 1000)
-                        document.getElementById('sunrise').innerHTML = tim
-                        let tim1 = new Date(data.sys.sunset * 1000)
-                        document.getElementById('sunset').innerHTML = tim1
-                        document.getElementById('windspeed').innerHTML = data.wind.speed
-                        document.getElementById('humid').innerHTML = data.main.humidity
-                    } else console.log('failed connecting')
-                }
-                request.onerror = function () { console.log(" Error ") }
-                request.send()
-            }
-        </script>
-    </head>
-    <body>
-        <br>
-        <div class="container">
-            <div class="jumbotron text-center">
-                <h1>Enter zipcode to get weather report</h1>
-                <input type="text" placeholder="Enter zipcode" id="tb1"><br><br>
-                <button type="submit" onclick="getWeather()">Click me</button>
-            </div>
-            <table class="table-bordered table-striped">
-                <thead>
-                    <tr><th>Key</th>
-                        <th>Value</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Country</td>
-                        <td><label id="country"></label></td></tr>
-                    <tr><td>City</td>
-                        <td><label id="city"></label></td></tr>
-                    <tr><td>Temperature</td>
-                        <td><label id="temp"></label></td></tr>
-                    <tr><td>Humidity</td>
-                        <td><label id="humid"></label></td></tr>
-                    <tr><td>Sunrise</td>
-                        <td><label id="sunrise"></label></td></tr>
-                    <tr><td>Sunset</td>
-                        <td><label id="sunset"></label></td></tr>
-                    <tr><td>WindSpeed</td>
-                        <td><label id="windspeed"></label></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </body>
-</html>
-----------
 // 3. Write a Node JS program that accepts a port from the user and runs a node server at that port
 var http = require('http')
 var server = http.createServer(function (req, res) {
@@ -282,3 +221,15 @@ require('fs').appendFile('file.txt', `Learn Node FS module \r\n`, function (err)
     if (err) throw err
     console.log('File is Appended successfully')
 });
+----------
+// 6. Create a student database in MongoDB with all the details of students of a class
+> show dbs
+> use wt
+    switched to db wt
+> db.wt.insert({name:"abc", rollno:1, marks:100})
+    WriteResult({ "nInserted" : 1 })
+> db.wt.insert({name:"pqr", rollno:2, marks:80})
+    WriteResult({ "nInserted" : 1 })
+> db.wt.find()
+    { "_id" : ObjectId("63ab12c019b23e284407ffe2"), "name" : "abc", "rollno" : 1, "marks" : 100 }
+    { "_id" : ObjectId("63ab12c719b23e284407ffe4"), "name" : "pqr", "rollno" : 2, "marks" : 80 }
