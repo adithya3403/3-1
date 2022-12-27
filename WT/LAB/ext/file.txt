@@ -1,2 +1,0 @@
-this is default first line
-Learn Node FS module 
