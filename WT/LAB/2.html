@@ -5,35 +5,7 @@ details for that location are fetched and displayed -->
 
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="mystyle.css">
         <title>Weather App</title>
-        <style>
-            #weather tr:nth-child(even) { background-color: #f2f2f2; }
-            #weather tr:hover { background-color: #ddd; }
-            #weather {
-                font-family: Arial, Helvetica, sans-serif;
-                border-collapse: collapse;
-                width: 50%;
-                margin-left: 25%;
-                margin-right: 15%;
-            }
-            #weather td, #weather th {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-            #weather th {
-                padding-top: 12px;
-                padding-bottom: 12px;
-                text-align: left;
-                background-color: #04AA6D;
-                color: white;
-            }
-        </style>
         <script>
             function getWeather() {
                 let request = new XMLHttpRequest();
@@ -63,13 +35,14 @@ details for that location are fetched and displayed -->
     </head>
 
     <body>
+        <br>
         <div class="container">
             <div class="jumbotron text-center">
-                <h1>Please enter Zip code to get weather report.</h1>
-                <input type="text" placeholder="enter zip code" id="tb1"><br><br>
-                <button type="submit" vlaue="Click for weather" onclick="getWeather()">Click me</button>
+                <h1>Enter zipcode to get weather report</h1>
+                <input type="text" placeholder="Enter zipcode" id="tb1"><br><br>
+                <button type="submit" onclick="getWeather()">Click me</button>
             </div>
-            <table class="table-bordered table-striped" id="weather">
+            <table class="table-bordered table-striped">
                 <thead>
                     <tr><th>Key</th>
                         <th>Value</th></tr>
