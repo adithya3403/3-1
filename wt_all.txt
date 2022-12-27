@@ -210,16 +210,14 @@ console.log('Server is running at port 8000');
 // 4. Write a NodeJS program to read from a file and display the content on screen "file.txt"
 // Content in file.txt: Hello World
 try {
-    var data = require('fs').readFileSync('file.txt', 'utf8')
-    console.log(data)
+    console.log(require('fs').readFileSync('file.txt', 'utf8'))
 } catch (e) { console.log('Error:', e.stack) }
 ----------
 // 5. Create a NodeJS programme that allows users to submit text and a file name, 
 // and if the file already exists, appends the text to the file. 
 // If not, make a fresh file and include the text in it.
-require('fs').appendFile('file.txt', `Learn Node FS module \r\n`, function (err) {
-    if (err) throw err
-    console.log('File is Appended successfully')
+require('fs').appendFile('file.txt', `second line \r\n`, function (err) {
+    err ? console.log(err) : console.log('Appended successfully')
 });
 ----------
 // 6. Create a student database in MongoDB with all the details of students of a class
