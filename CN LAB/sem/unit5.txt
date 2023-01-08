@@ -1,0 +1,158 @@
+CHAPTER 1:
+    raw socket: provides direct access to lower layer protocols, eg:IP, ICMP, ICMPv6, ...
+    raw socket features:
+        can read and write ICMPv4, IGMPv4, ICMPv6 packets
+        eg: ping program sends ICMP echo req and gets ICMP echo replies
+        a process can read and write IPv4 datagrams
+        a process can build its own IPv4 header using IP_HDRINCL socket option
+    raw socket creation:
+        raw_socket=socket(AF_INET, SOCK_RAW, int protocol)
+            where protocol=one of the constants, IPPROTOT_xxx such as IPPROTOT_ICMP
+        bind(): calling bind sets the source IP address
+        connect(): calling connect lets us call write or send instead of sendto
+    raw socket output:
+        output is performed by calling sendto or sendmsg and specifying dest IP
+        if IP_HDRINCL is not set, then the kernel will build the IP header
+        if IP_HDRINCL is set, then the starting address is taken fromm the first byte
+    raw socket input:
+        received udp and tcp packeets are never passed to a raw socket
+        if a process wants to read IP datagrams, it must read at the datalink layer
+    ping program:
+        ping is a cmd command that can be used to test a connection bw one computer and another
+        when the ping strikes a nearby object, it will echo back
+        we can determine distance by measuring the time it takes for the ping to return
+        an ICMP echo is sent to some IP and that node responds with an ICMP echo reply
+        these are supported under both IPv4 and IPv6
+        ping algo:
+            a) initialize echo req
+            b) send echo req
+            c) wait for echo reply
+            d) receive reply
+            e) report results
+            f) go back to 1 until complete
+        echo req/reply format:
+            type: 8 for req, 0 for reply
+            code: 0
+            checksum: calculated over the entire packet
+            identifier: a 16 bit id that is used to match req and reply
+            sequence number: a 16 bit number that is used to match req and reply
+            data: 56 bytes of data
+    trace-route program:
+        determines the path that IP datagrams follow from host to dest
+        it has TTL(time-to-live) in IP header, designed to prevent router loops
+        if TTL>0, then router decrements TTL and forwards packet
+        if TTL=0, then router sends ICMP time exceeded message to source
+        trace-route algo:
+            a) set ttl=1
+            b) initialize echo request
+            c) send echo req
+            d) wait for echo reply/timeout
+            e) receive reply
+            f) report results
+            g) if (reply) {done;} else {ttl++; go to step(b)}
+    ICMP message daemon:
+        receiving asynchronous ICMP errors on udp has been a problem
+        only error returned from recvfrom is errno code
+        if app sends datagram to multIPle destinations, it has no way of knowing which one failed
+        ICMP message daemon is a process that runs in the background and listens for ICMP errors
+        it is started by the kernel when the first raw socket is created
+        ICMPv4-> ICMPd <-ICMPv6, application<->UDP and application<->ICMPd
+
+CHAPTER 2:
+    websockets def: 
+        websockets are defined as a two-way communication bw the servers and the clients
+        both the parties communicate and exchange data at the same time(full-duplex in multiverse)
+        why do we need websockets? websockets are used for transforming cross platform communication
+    implementation:
+        client establishes a connection through websocket handshake
+        process begins with client sending http request to servers
+        informs the server that request is for websocket connection
+        creation: var socket=new WebSocket("ws://cho.websocket.org");
+    actions: send() and close()
+        send(): some communication with server, eg: msg, files, data, images, etc.
+            var textsend=document.getElementById("textsend")
+            var send=document.getElementById("send")
+            send.onclick=function() {socket.send(textsend.value)}
+        close(): goodbye handshake
+            var textsend=document.getElementById("textsend")
+            var stop=document.getElementById("stop")
+            stop.onclick=function() {
+                if (socket.readyState==WebSocket.OPEN) {socket.close()} }
+            (OR) socket.close(1000, "forced stop")
+    events: open, send, close, error handling
+        opening connections:
+            var socket=new WebSocket("ws://echo.websocket.org");
+            socket.onopen=function() {
+                console.log("established connection!")
+                var label=document.getElementById("label")
+                label.innerHTML="connected to: "+socket.url;
+            }
+        handling errors:
+            socket.onclose=function(event) {
+                console.log("error occurred!")
+                var label=document.getElementById("label")
+                label.innerHTML="error occurred!"
+            }
+        send and receive messages: 
+            connection.onmessgae=function(e) {
+                var server_message=e.data;
+                console.log("received: "+server_message);
+            }
+        closing a connection:
+            var textview=document.getElementById("textview")
+            var stop=document.getElementById("stop")
+            stop.onclick=function() {
+                if (socket.readyState==WebSocket.OPEN) {socket.close()} 
+            }
+    API: set of routines, protocols and tools for building s/w applications
+        API's should be used when programming GUI components
+        a good API makes it easier to develop program by providing all building blocks
+        REST style API's are used to create web services
+        REST avoids ambiguity because each verb has a specific meaning(GET, POST, PUT, DELETE)
+    websockets security:
+        denial of service:
+            suppose someone makes infinite requests to a web server with very small interval times
+            server is not able to handle each connection and will stop responding
+            very frustrating for end users, cant even load a page
+        man in the middle:
+            A and B are chatting and some person C wants to view their conversation
+            he makes independent connection to A and B and copies the messages
+            solid strategy is to use ssh with websockets
+    defense mechanisms:
+        client-to-server masking: browser handles masking
+            every msg contains a masking key, allows any websocket compliant client to inspect msg
+        browser dev tools: chrome, firefox, opera
+            built-in tools help us determine almost any aspect of client-side interactions
+
+CHAPTER 3:
+    security: ensuring the confidentiality, integrity and availability of data
+    network security: measures to protect data during transmission
+    internet security: measures to protect data during transmission over networks
+    computer security: protection afforded in order to attain confidentiality, integrity and availability
+    3 levels of impact from security breach: low, moderate, high
+    goals: confidentiality, integrity, availability
+        confidentiality: private data is not disclosed to unauthorized parties
+            privacy: we can control what data is shared with others
+        integrity: changed only in authorized manner
+            system integrity: free from unauthorized manIPulation
+        availability: systems work promptly and not denied to authorized users
+            authorized parties should not be denied
+            computer works when it is supposed to work and they way it should
+    security breaches:
+        exposure: unauthorized disclosure of data
+        vulnerability: weakness in system that can be exploited
+        attack: deliberate attempt to exploit vulnerability and evade security
+        S/W threats: viruses, trojan horses, logic bombs, etc.
+    types of attacks in network security: 4 types
+        a) interruption: data is unavailable/unusable(loss of file)
+        b) interception: unauthorized party has gained access(overhearing others)
+        c) modification: data is changed without authorization(altering data)
+        d) fabrication: data is created without authorization(adding passwords)
+    aspects of security:
+        security attack: 
+            passive: attempts to learn/use data but doesn't affect system
+            active: attempts to alter data/affect their operation(difficult to catch these)
+        security service: intended to counter security attacks, use 1/more mechanisms
+            X.800: assurance that communication is authenticated
+        security mechanism: designed to detect, prevent or recover from an attack
+
