@@ -1,0 +1,508 @@
+UNIT 3:
+    Node.js:
+        server-side platform built on chrome's js engine
+        it is for easily building fast and scalable network applications
+        uses as event-driven, non-blocking IO model
+        lightweight and efficient, 
+        perfect for data-intensive real-time applications that run across devices
+        written in javascript
+        run on os x, microsoft windows and linux
+        node.js = runtime env + javascipt library
+        features:
+            asynchronous and event-driven, fast, single-threaded
+            non-blocking I/O, lightweight, efficient, cross-platform
+        first application:
+            var http=require('http');
+            http.createServer(function(req,res){
+                res.writeHead(200,{'Content-Type':'text/plain'});
+                res.end('Hello World\n');
+            }).listen(1337);
+            console.log('Server running at http://127.0.0.01:1337/');
+    Express:
+        Express provides minimal interface to build our applications
+        provides tools that are required to build our app
+        pug: terse language for writing html templates
+        express life cycle:
+            $ npm init
+            $ npm install --save express
+            $ npm install -g nodemon
+            index.js:
+                var express=require('express');
+                var app=express();
+                app.get('/',(req, res)=>res.send('Hello World!'));
+                app.listen(3000);
+            $ nodemon index.js
+            app.get(route, callback):
+                route: url path
+                callback: has two params: request and response
+            res.send(): takes an object and sends to requesting client
+            app.listen(port, [host], [backlog], [callback]]): 
+                port: port number, host: domain name
+                backlog: maximum length of queue of pending connections
+                callback: function to be called when server starts listening
+        ExpressJS routing:
+            function used to define route
+            app.method(path, handler): 
+                method: get, post, put, delete, all
+                path: url path
+                handler: function to be executed when route is matched
+            example:
+                var express=require('express');
+                var app=express();
+                app.get('/',(req, res)=>res.send('Hello World!'));
+                app.get('/about',(req, res)=>res.send('About Page'));
+                app.listen(3000);
+                    localhost:3000/about gives 'About Page'
+            different methods:
+                var express=require('express');
+                var app=express();
+                app.get('/',(req, res)=>res.send('Hello World!'));
+                app.post('/',(req, res)=>res.send('Got a POST request'));
+                app.listen(3000);
+                    $ curl -X POST http://localhost:3000/
+                    output: Got a POST request
+                app.all(): used to handle all HTTP methods
+        Routers: we will use Express.Router
+            things.js:
+                var express=require('express');
+                var router=express.Router();
+                router.get('/',(req, res)=>res.send('Things'));
+                router.post('/about',(req, res)=>res.send('About Things'));
+                module.exports=router;
+            index.js:
+                var express=require('express');
+                var app=express();
+                var things=require('./things.js');
+                app.use('/things',things);
+                app.listen(3000);
+                    localhost:3000/things gives 'Things'
+                    localhost:3000/things/about gives 'About Things'
+        HTTP methods:
+            get: used to retrieve data
+            post: server accept data in the request as a new object
+            put: server accept data in the request to update an existing object
+            delete: server deletes an existing object
+
+UNIT 4: ExpressJS as middleware:
+    intro:
+        middleware framework for handling diff routing of webpage
+        works between the request and response cycle
+        middleware has access to request object and response objects
+        it can process the request before server send a response
+        adv:
+            can process request objects multiple times before server works
+            used to add logging and authentication
+            improves client-server rendering performance
+            setting some specific HTTP headers
+            optimization and better performance
+    express router methods:
+        route method is dervied from one of the HTTP methods
+        attached to an instance of the express class
+        example:
+            app.get('/',(req, res)=>res.send('Hello World!'));
+            app.post('/',(req, res)=>res.send('Got a POST request'));
+        route methods: copy, delete, get, merge, move, post, put, search, lock
+    route paths:
+        route paths are strings that are used to match HTTP requests
+        they can be strings, string patterns or regular expressions
+        example:
+            app.get('/',(req, res)=>res.send('Hello World!'));
+            app.get('/about',(req, res)=>res.send('About'));
+            app.get('/random.text',(req, res)=>res.send('Random Text'));
+            app.get('/ab?cd',(req, res)=>res.send('ab?cd'));
+    route parameters:
+        named url segments that are used to capture values 
+        they are populated in req.params object
+        example:
+            1.  app.get('/users/:userId/books/:bookId', (req, res)=>{
+                    res.send(req.params);
+                }); // output: {"userId":"34","bookId":"8989"}
+            2.  app.get('/user/:userId(\d+', (req, res)=>{
+                    res.send(req.params);
+                }); // output: {"userId":"34"}
+            3.  app.get('/example/a', (req, res)=>{
+                    res.send('Hello from A!');
+                }); // output: Hello from A!
+            4.  more than one callback function
+                app.get('/example/b', (req, res, next)=>{
+                    console.log('the response will be sent by next function');
+                    next();
+                }, (req, res)=>{res.send('Hello from B!')});
+            5.  array of callback functions
+                const cb0=(req, res, next)=>{
+                    console.log('CB0');
+                    next();
+                }
+                const cb1=(req, res, next)=>{
+                    console.log('CB1');
+                    next();
+                }
+                const cb2=(req, res)=>{res.send('Hello from C!')}
+                app.get('/example/c', [cb0, cb1, cb2]);
+            6.  a combination of independent functions and arrays of functions
+                const cb0=(req, res, next)=>{
+                    console.log('CB0');
+                    next();
+                }
+                const cb1=(req, res, next)=>{
+                    console.log('CB1');
+                    next();
+                }
+                app.get('/example/d', [cb0, cb1], (req, res, next)=>{
+                    console.log('the response will be sent by next function');
+                    next();
+                }, (req, res)=>{res.send('Hello from D!')})
+    response methods:
+        methods on the response objects can send a response to the client
+        example:
+            res.download(): prompt a file to be downloaded
+            res.end(): end the response process
+            res.json(): send a JSON response
+            res.redirect(): redirect a request
+            res.send(): send a response of various types
+
+UNIT 5:
+    CRUD operations:
+        create:
+            create a db: use <kmit>
+            create collection:
+                db.createCollection(<collection_name>)
+                insert: db.kmit.insert({"name":"kmitstudent"})
+            insert document to collection:
+                db.kmit.insert({"name":"kmitstudent"})
+                db.kmit.insert({_id:10, "name":"kmitstudent"})
+            drop db: db.dropDatabase()
+            drop collection: db.kmit.drop()
+        read:
+            retrieve documents from a collection: db.kmit.find()
+            db.collection_name.find(selection_criteria, projection)
+                selection_criteria: query document
+                projection: specify which fields to include in the result
+            eg: db.books.find() or db.student.find({})
+                db.student.find({age:18})
+            db.collection_name.findOne()
+            db.collection_name.find().limit(n)
+            db.collection_name.find().limit(n).skip(1)
+            db.collection_name.find().sort(-1) where 1: ascending, -1: descending
+            starts with: db.collection_name.find({name:/^kmit/})
+            contains: db.collection_name.find({name:/mit/})
+            ends with: db.collection_name.find({name:/student$/})
+            and-query: db.collection_name.find({$and:[{name:/mit/},{age:18}]})
+            or-query: db.collection_name.find({$or:[{name:/mit/},{age:18}]})
+            not-query: db.collection_name.find({$not:{name:/mit/}})              
+        update:
+            db.users.insertOne({name:"kmit", age:18})
+            db.users.insertMany([{name:"kmit", age:18},{name:"kmit", age:18}])
+            db.users.updateOne({name:"kmit"},{$set:{age:20}})
+            db.users.updateMany({name:"kmit"},{$set:{age:20}})
+            db.users.replaceOne({name:"kmit"},{name:"kmit", age:20})
+            db.kmit.findAndModify({query:{name:"kmit"}, update:{$set:{age:20}}, upsert:true})
+            db.emp.update({name:'John'}, {$set:{dep:'HR'}}, {upsert=true})
+        delete:
+            db.coll.deleteOne({name:"kmit"})
+            db.coll.deleteMany({name:"kmit"})
+    importing data:
+        mongoimport <path to json> -d <database> -c <collection> -–drop
+    exporting data:
+        mongoexport --collection=<collection> --db=<database> --out=<path to json>
+    aggregation operations:
+        db.orders.aggregate([
+            {$match:{status:"A"}},
+            {$group:{_id:"$cust_id", total:{$sum:"$amount"}}}
+        ])
+            $match: filters the documents to pass only the documents with status A
+            $group: groups input documents by the cust_id field and total the amount field
+
+UNIT 1:
+    Javascript:
+        intro:
+            js is a programming language for use in html pages
+            programs are run by interpreter built into the user's web browser
+        js can:
+            dynamically modeify html page, react and validate user input,
+            used to create cookies, programming language for server side
+        pros: allows more dynamic html pages, even complete web application
+        cons: not supported by all browsers
+        using js in html: 3 ways
+            internal within body:
+                <body><script type="text/javascript">
+                        document.write("Hello World");
+                    </script></body>
+            internal within head:
+                <head><script type="text/javascript">
+                        document.write("Hello World");
+                    </script></head>
+            external:
+                <head><script type="text/javascript" src="sample.js"></script></head>
+        variables: let, const, var
+            var:
+                function scoped
+                can be redeclared
+                eg: var name="william"; var name=123
+            let: 
+                block scoped
+                cannot be redeclared but can be redefined
+                eg: let name="william"; let name="goth" // error
+            const:
+                block scoped
+                cannot be redeclared or redefined
+                eg: const pi=3.14; pi=3.14159; // error
+        identifiers:
+            variables must be identified with unique names, rules:
+                can contain letters, digits, underscores, dollar signs
+                must begin with a letters, can also begin with $ or _
+                case sensitive(y and Y are diff), no reserve words
+            eg: let person="john", college="kmit", price=20;
+            redeclaring:    
+                var name="john"; var name; // john
+                let name="john"; let name; // error
+                const name="john"; const name; // error
+                let $="kmit; let $$$=2; // valid
+        data types:
+            let length=16; // number
+            let lastName="johnson"; // string
+            let x={firstName:"john", lastName:"doe"}; // object
+            let cars=["saab", "volvo", "bmw"]; // array
+            console.log(typeof(x)) // gives data type
+    Strings:
+        sequence of characters used to represent text
+        textual data is stored as things, no separate type for character
+        literals:
+            let name="john"; // double quotes
+            let name='john'; // single quotes
+            let name=`john`; // backticks
+            let guests=`
+                * john
+                * pete`; // valid
+        strings are immutable:
+            let str="hi";
+            str[0]='H'; // error
+            str.toUpperCase(); // returns 'HI', but doesn't alter str
+        methods: 
+            charAt(), indexOf(), substr(), toLowerCase(), toUpperCase(),
+            trim(), startWith(), endsWith(), includes()
+    Arrays:
+        ordered collection of indexed elements of any type
+        first element's index is 0
+        let arr=[1, true, 'hello', 7, ..., false]
+        cosnt fruits=['apple', 'banana']
+        console.log(fruits.length); // 2
+        const first=fruits[0], last=fruits[fruits.length-1] // apple, banana
+        isArray(): returns true if an object is an array
+            eg: Array.isArray([1,2,3,'john']); // true
+        push(): adds one or more elements to the end of an array
+        pop(): removes the last element from an array
+        shift(): removes the first element from an array
+        unshift(): adds one or more elements to the beginning of an array
+        splice(): adds/removes items to/from an array, and returns the removed item(s)
+        fill(): fills all the elements of an array with a static value
+        loops:
+            let arr=['apple', 'orange', 'pear']
+            for (let i=0; i<arr.length; i++) alert(arr[i])
+            for (let fruit of arr) alert(fruit)
+            for (let key in arr) alert(arr[key])
+    Regex:
+        describes a pattern of text
+        used to match, search, replace, and extract information from text
+        4 methods:
+            .match(regexp): returns first match
+            .replace(regexp, text): replaces first match
+            .search(regexp): returns index of first match
+            .split(delimiter): splits string into array of substrings
+        basic regex:
+            /abc/: valid for abc, abcdef, defabc, .abc., ...
+            /abc/i: valid for abc, ABC, AbC, aBc, ... // case insensitive
+            /abc/g: valid for abc, abc, abc, ... // global
+            /.oo.y/: valid for dooey, fooey, gooey, ... // any character
+            /[^abc]/: valid for any character except a, b, c
+            /\<for\>/: valid for for, for, for, ... // word boundary
+            "obama".match(/.a/g): ["ba", "ma"] // match all
+            name.match(/Marty/i): ['marty', 'MaRtY']
+            string.replace(regex, text):
+                var state='Mississippi';
+                state.replace(/s/, "x"); // Mxssissippi
+                state.replace(/s/g, "x"); // Mxxxxixxxi
+                state=state.replace(/s/g, "x"); // stores in  string
+            /abc|def|g/: "abc" or "def" or "g"
+            /(homer|marge) simpson/: "homer simpson" or "marge simpson"
+            "\.\\n" matches lines containing ".\n"
+            /abc*/: "ab", "abc", "abcc", "abccc", ...
+            /abc+/: "abc", "abcc", "abccc", ...
+            /abc?/: "ab", "abc"
+            /a(bc){2,4}/: "abcbc", "abcbcbc", "abcbcbcbc", ...
+            /a(bc){2,}/: "abcbcbc", "abcbcbcbc", "abcbcbcbcbc", ... // 2 or more
+            /a(bc){2}/: "abcbc" // exactly 2
+            /a(bc){,4}/: "a", "ab", "abc", "abcbc", "abcbcbc", ... // upto 4
+            /what[.!*?]*/: "what", "what.", "what!", "what?**!", ...
+            /[a-z]/: matches any lowercase
+            /[a-zA-Z0-9]/: matches any letter or digit
+            /[^abcd]/: matches any character but a, b, c, d
+            \d: any digit, \w: any word character, \s: any whitespace
+            /pattern/g: global, /pattern/i: case insensitive, /pattern/m: multiline
+            new RegExp(string): creates a regex from a string
+            new RegExp(string, flags): creates a regex from a string with flags
+            var r=/ab+c/gi is same as var r=new RegExp("ab+c", "gi")
+            many editors allow regexes in their find/replace feature
+    functions:
+        block of code that is defined once but may be executed any number of times
+        built-in functions: alert(), prompt(), confirm(), parseInt(), parseFloat()
+        user-defined: function(param)=>{...}
+        function declaration: function add(a, b){return a+b}
+        function expression: const add=function(a, b){return a+b}
+        default parameters: function add(a, b=0){return a+b}
+            eg: add(2, 3) // 5 and add(2) // 2
+        nested functions:   
+            function addSq(a, b) {
+                function sq(x) {
+                    return x*x;
+                }
+                return sq(a)+sq(b);
+            }
+            addSq(2, 3) // 13
+        closure example:
+            const pet=function(name) {
+                const getName=function() {
+                    return name;
+                }
+                return getName;
+            }
+            myPet=pet('Vivie');
+            console.log(myPet()); // Vivie
+        rest parameter:
+            function sum(...nums) {
+                let total=0;
+                for (let n of nums) total+=n;
+                return total;
+            }
+            sum(1, 2, 3, 4, 5) // 15
+        spread operator:
+            spread syntax(...) can be used when all elements from an object or 
+            array need to be included in a list of some kind
+        callback functions:
+            we can pass functions as arguments to other functions
+            any function that is passed as an argumnet is called a callback function
+                function greet() {console.log('hello, world!')};
+                function sayName(name) {console.log('hello '+name)};
+                setTimeout(greet, 2000) // calling function 
+                sayName('john')
+    destructing:
+        unpack values from arrays, or properties from objects, into distinct variables
+        let arr=['apple', 'banana', 'orange'];
+        let [a, b, c]=arr;
+        console.log(a, b, c); // apple, banana, orange
+        let obj={name:'john', age:30};
+        let {name, age}=obj;
+        console.log(name, age); // john, 30
+        rest pattern:
+            let arr=['apple', 'banana', 'orange', 'pear'];
+            let [a, b, ...rest]=arr;
+            console.log(a, b, rest); // apple, banana, ['orange', 'pear']
+    sets:
+        collection of unique values
+        eg:
+            let set=new Set();
+            set.add(1);
+            set.add(2);
+            set.add(3);
+            set.add(2);
+            console.log(set.size()); // 3
+            console.log(set); // Set(3) {1, 2, 3}
+        methods:
+            add(), delete(), has(value), clear(), size()
+    maps:
+        collection of key-value pairs
+        eg:
+            let map=new Map();
+            map.set('name', 'john');
+            map.set('age', 30);
+            console.log(map.get('name')); // john
+            console.log(map.size); // 2
+        methods:
+            set(key, value), get(key), delete(key), has(key), clear(), size()
+    JSON:
+        javascript object notation
+        lightweight text-based open standard designed for human-readable data interchange
+        filename extension is .json
+        it is language independent
+        it is easy for humans to read and write
+        eg:
+            {
+                "name": "john",
+                "age": 30,
+                "cars": [
+                    {"name": "Ford", "models": ["Fiesta", "Focus", "Mustang"]},
+                    {"name": "BMW", "models": ["320", "X3", "X5"]},
+                    {"name": "Fiat", "models": ["500", "Panda"]}
+                ]
+            }
+    iterators:
+        iterator only needs to knnow current position in the collection
+        eg:
+            const Movies=['rrr', 'kgf', 'bahubali'];
+            const iterator=Movies[Symbol.iterator()]();
+            console.log(iterator.next()); // {value: "rrr", done: false}
+            console.log(iterator.next()); // {value: "kgf", done: false}
+            console.log(iterator.next()); // {value: "bahubali", done: true}
+        value: element in the colection
+        done: boolean value indicating whether the iterator is done iterating
+        objects are not iterable 
+    generators:
+        allow you to define an iterative algo by writing a function
+        eg:
+            const student={name:'john', gender:"male", age:20}
+            function* objectEntries(obj) {
+                const keys=Object.keys(obj);
+                for (const key of keys) {
+                    yield [key, obj[key]];
+                }
+            }
+            for (const [key, value] of objectEntries(student)) {
+                console.log(`${key}: ${value}`);
+            }
+        advantages: lazy evaluation, cleaner code, memory efficient, easy to test
+    asynchronous:
+        synchronous eg:
+            console.log("I");
+            console.log(" eat");
+            console.log(" ice cream"); // I eat ice cream
+        asynchronous eg:
+            console.log("I");
+            setTimeout(()=>{console.log(" eat")}, 1000);
+            console.log(" ice cream"); // I ice cream eat
+        callbacks in js:
+            function one() {...}
+            function two(call_one) {
+                // do something
+                call_one();
+            }
+            two(one);
+        eg:
+            function fun1(callback) {
+                console.log("place order")
+                callback(fun3)
+            }
+            function fun2(callback) {
+                console.log("prepare food")
+                callback()
+            }
+            function fun3() {
+                console.log("serve food")
+            }
+            fun1(fun2);
+        callback hell:
+            promises were invented to solve this problem
+            promises:
+                pending: initial state, neither fulfilled nor rejected
+                resolved: operation completed successfully
+                rejected: operation failed
+            eg:
+                async function kitchen() {
+                    try {
+                        await abc;
+                    } catch(err) {
+                        console.log(err);
+                    } finally {
+                        console.log("finally");
+                    }
+                }
+                kitchen();
