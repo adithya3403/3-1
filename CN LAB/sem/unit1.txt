@@ -1,0 +1,130 @@
+CHAPTER 1:
+    components: sender, receiver, message, protocols, transmission medium
+    direction of data flow:
+        simplex: one direction only(keyboards and monitors)
+        half-duplex: two directions, but only one at a time(walkie-talkie)
+        full-duplex: two directions at the same time(telephone network)
+    types of connections:
+        point-to-point: one sender and one receiver
+        point-to-multipoint: one sender and multiple receivers
+    topologies:
+        mesh: each node is connected to every other node
+              no. of connection=n-1, n=number of devices
+              unidirectional links=n(n-1)/2, bidirectional links=n(n-1)
+              adv: no data loss, easy troubleshoot, fast
+              disadv: huge wires and cost
+        star: multiple point-to-point link only to central controller(hub/switch)
+              hub: broadcast, shared to all devices and authorized device takes data
+              switch: unicast, authorized device takes using address
+        bus:  one long cable(backbone) links all devices in a network
+              connected to the bus cable by drop lines and taps
+        ring: each device has a point-to-point with only neighbors
+              signal is passed until it reaches destination
+        hybrid: combination of two or more topologies
+    network categories:
+        Local Area Network(LAN): short distance, local interaction
+        Wide Area Network(WAN): long distance, connectivity over large areas
+        metropolitan area networks(MAN): large cities
+    protocols and standards:
+        protocols: set of rules. Has syntax, semantics and timing
+        standards: provide guidelines to ensure compatibility
+        examples: ISO, IEEE, ANSI, ITU-T, EIA
+    OSI model: open systems interconnection, [order:APSTNDP]
+        Application layer:
+            providing services to the user: http, https, telnet, skype, ftp, smtp, etc.
+        Presentation layer:
+            translation: decimal to binary
+            compression: reduce size of data
+            encryption and decryption: secure data
+        Session layer:
+            dialog control: happens in either half-duplex/full-duplex modes
+            synchronization: add checkpoints, paths, etc
+            token management: prevents 2 parties from attempting same operation
+        Transport layer:
+            delivery of message from one process to another
+            segmentation: breaking message into smaller parts(10mb=10*1mb)
+            flow and error control
+        Network layer:
+            delivery of packets from source to destination host
+            logical addressing: IP Address
+            routing: setting the path of the packet to reach from source to dest
+        Data Link layer:
+            moving frames from one node to next
+            physical addressing: MAC Address
+            framing: [source_max|dest_max|data_part|source_ip|dest_ip|data]
+            access control: CSMA/CD, CSMA/CA, token ring
+            flow control, error control
+        Physical layer:
+            movement of individual bits from one node to next
+            representation of bits: 0, 1, voltage, current, light, sound
+            transmission media: simplex, half-duplex, full-duplex
+            topology: mesh, star, ring and so on
+            line config: point-to-point, multipoint
+            data rate: bits per second
+            synchronization: clock
+    TCP/IP model: has 4 layers
+        application: specific addresses
+            application+presentation+session(SMTP, FTP, HTTP, DNS, SNMP, telnet)
+        transport: transport(SCTP, TCP, UDP), port addresses
+        network: network(ICMP, IGMP, ARP, RARP, IP), logical addresses(or IP addresses)
+        network interface: data link+physical(protocols), physical addresses(or MAC addresses)
+
+CHAPTER 2:
+    data transmission:
+        parallel: speed increased, n-wires to send n-bits
+        serial: one bit follows the other
+            asynchronous: 0 start bit, 1 end bit
+                timing of signal is not important, data must be received
+            synchronous: timing of signal is important, data must be received
+            isochronous: cannot have uneven gaps, data is fixed with equal gaps
+    multiplexing:
+        allows multiple signals to be transmitted over a single channel
+        FDM: frequency division multiplexing(frequencies are combined)
+        WDM: wavelength division multiplexing(wavelengths are combined)
+        TDM: time division multiplexing(time is divided into slots)
+        SDM: statistical time division multiplexing(time is divided into slots)
+    transmission media:
+        guided: (wired)
+            twisted pair: two conductors twisted, one for transmit, one for grounding
+            coaxial cable: central core conductor encased in insulator, surrounded by shield
+            fiber optic cable: made of glass/plastic, light is transmitted
+        unguided:
+            radio waves: omnidirectional, 3kHz to 100GHz, penetrates walls
+            micro waves: uni-directional, 100GHz to 300GHz, cannot penetrate walls
+            infrared: short-range communication, 300GHz to 1THz, only inside a room
+
+CHAPTER 3:
+    framing:
+        character stuffing: [flag|header|data|trailer|flag]
+        byte stuffing: [flag|header|data...ESC.flag...ESC.ESC...|trailer|flag]
+        bit stuffing: [01111110|header|data|trailer|01111110], for 5 consecutive 1s, add 0
+    error detection and correction:
+        single bit error: 0000010 -> 0000000
+        burst error: 01010 -> 00111
+        codeword: {00:000, 01:011, 10:101, 11:110}, codeword should have even number of 1's
+    hamming code: d(000, 011) is 2, d(10101, 11110) is 3
+    crc: cyclic redundancy check
+        crc encoder:
+            dataword=1001, divisor=1011
+            add 3 zeroes and divide by divisor, remember remainder=110
+            codeword=dataword+remainder
+        crc decoder:
+            divisor=1011, codeword=1001100
+            on dividing, remainder must be zero
+        with polynomials:
+            coefficients of 0 and 1
+            adding: x5+x2+x4+x2=x5+x4
+            multiplying: x3*x4=x7
+            dividing: x5/x2=x3
+    checksum:
+        sender side:
+            set=[7,11,12,0,6,0], sum=36
+            100100=36, first 2 bits=10 ,last 4 bits=0100
+            0100 XOR 10=0110(6) and 1001(9)
+            sum=36, wrapped sum=6, checksum=9
+        send to receiver [7,11,12,0,6,9]
+        receiver side: [7,11,12,0,6,9], sum=45
+            101101(45), first 2 bits=10, last 4 bits=1101
+            1111 XOR 10=1111(15) and 0000(0)
+            successful
+
