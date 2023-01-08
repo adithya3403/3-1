@@ -1,0 +1,108 @@
+CHAPTER 1:
+    ipv4 addressing: 32bit address that uniquely identifies connection, eg: 128.11.3.31
+        no leading zeroes, not more than 4, each<=255, binary/decimal dotted
+        classful: 5 classes: A(0-127), B(128-191), C(192-223), D(224-239), E(240-255)
+        classless: 205.16.37.39/28, find first and last address in the block 
+            205.16.37.39=11001101 00010000 00100101 00100111
+            32-28=4, rightmost 4 bits=0, => 11001101 00010000 00100101 00100000=205.16.37.32
+            32-28=4, rightmost 4 bits=1, => 11001101 00010000 00100101 00101111=205.16.37.47
+            n=28, number of addresses=2^(32-28)=2^4=16 (OR) count in between 32 and 47=16
+    ipv6 addressing: 128bit long, separated by ':'
+    address mapping:
+        ARP: address resolution protocol
+            we know IP, we want MAC address
+            for eg; we want to find MAC address of B and we are at A and router is R
+            A sends request in the format [(IB|?)|MA|FF:FF:FF:FF:FF:FF] (broadcast)
+            B replies in the format [(IB|IA)|MB|MA] (unicast)
+        RARP: reverse address resolution protocol
+            we know MAC address, we want IP address
+            for eg: lets assume node A joined newly into a network
+            network has RARP server(RS) and RS stores ip address of each node in in, even A's
+            A sends a request in the format [(MA|0.0.0.0)|MA|FF:FF:FF:FF:FF:FF] (broadcast)
+            RS replies in the format [(MA|IA)|MRS|MA] (unicast)
+        BootP: provide physical address to logical address mapping
+            admin may put client and server in same or diff network(s)
+        DHCP: dynamic host allocation protocol
+            IP address is assigned to each node either static/dynamic way, static is forever
+            in dynamic, a node gets its IP address for lease time from the IP pool
+            after the lease time, it is sent back to the pool and node must renewal it
+        ICMP: internet control message protocol, used to find which station rejected IP packet
+            for eg: we have network in the form A___X___Y___B
+            A wants to send IP packet to B and first sends to X, X accepts and forwards
+            X sends to Y, but due to congestion/buffer size usse Y rejects
+            (if IP gets rejected then send ICMP, but if ICMP gets rejected dont send any)
+            now A needs to know: i) who rejected? ii) why? iii) which packet
+            ans: i) IP address of Y is sent in ICMP packet to A
+                 ii) the reason is written in type field of ICMP packet
+                 iii) the last 8 bits of rejected IP packet are sent back to A for identification
+            different error reportings are: dest unreachable, time exceeded, parameter problem, etc.
+        IGMP: internet group management protocol
+            used for multi-point connections, we are using IGMP2
+            IGMP1: node can request for data from router
+            IGMP2: node can request and even deny the data from router
+            IGMP3: node can request, deny and even select path for data from router
+CHAPTER 2:
+    unicast routing:
+        distance vector routing and RIP:    
+            for each node in the network, data table is drawn which has dest, dist and next
+            these are continuously updated by sending routing packets to all nodes
+            when a node receives a routing packet, it updates its data table
+            we only send the distance vector to neighboring nodes
+            disadv: infinite loop, more than 2 nodes can convince their neighbors to send them
+            to solve this, we use link state
+        link state routing and OSPF:
+            similar to DVR, but we also use Dijkstra's algorithm to find shortest path from source
+            we follow flooding, which is sending routing packets to all nodes
+            when a node receives a routing packet, it updates its data table
+            we send the whole data in flooding
+            each node knows atleast about its neighbors and their neighbors
+            disadv: occupies more space, more time to converge
+        path vector routing and BGP:
+            it is an extension of link state but uses path vector instead of distance vector
+            there are multiple AS's(autonomous system) and each AS has a speaker node
+            nodes in AS can have data about other nodes in same AS, but not about other AS's
+            speaker node in each AS can send routing packets to all nodes in its AS
+            when a node receives a routing packet, it updates its data table
+
+CHAPTER 3:
+    TCP protocol: connection establishment + data transfer + connection termination, long process
+    UDP protocol: send request and get response ONLY, eg: broadcast, speed, etc.
+        eg: UDP is in TL, picks from NL and sends to AL
+        only 4 things in header: source_port(16bit), dest_port(16), length(16), checksum(16)
+        fixed header size: 8bytes or 64bits
+        checksum is optional, if we don't want we can keep 16 zeroes
+    congestion: load on network > capacity of network
+        load=number of packets in transit
+        capacity=number of packets that can be transmitted in a given time
+        delay vs load: delay increases with load
+        throughput vs load: throughput decreases with load
+    congestion control:
+        open loop:
+            retransmission: when packet is lost, sender retransmits it
+            window: selective repeat aRQ is better than go-back-N window
+            ack: sending few ack means less load on the network
+            discarding: discarding packets that are not needed
+            admission: can deny admission to a new connection
+        closed loop:
+            back-pressure: node stops receiving data from intermediate node
+            choke packet: packet sent by node to source to inform congestion occurred
+            implicit signaling: no communication bw congested nodes and source, source guesses
+            explicit signaling: node can explicitly send a signal to source
+                backward: a bit is sent in direction opposite to congestion to source
+                forward: a bit is sent in direction of congestion to receiver
+        in TCP:
+            uses AIMD(Additive Increase Multiplicative Decrease)
+            RTT: round trip time, we plot congestion time vs RTT
+            in graph: 3 phases
+                initially maximum segment size=MSS=1
+                slow start:
+                    after we receive one, we increase MSS=2 and so on 
+                    MSS=2 to 4 to 8 and so on, this is slow start(exponential growth)
+                    there is a threshold to keep track of slow start
+                congestion avoidance:
+                    when threshold is reached, we increase MSS by 1(linear growth)
+                    MSS=9, 10, 11, 12 and so on 
+                congestion detection:
+                    imagine sender did not get ack back, so congestion occurred
+                    then threshold becomes half of 12, here 6(Multiplicative decrease)
+                    reduces congestion window back to 1, so slow start again
