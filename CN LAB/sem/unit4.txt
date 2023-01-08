@@ -1,0 +1,174 @@
+CHAPTER 1:
+    DNS: domain name server
+        when domain name is given as input, DNS gives ip address as output
+        iterative:
+            after each step goes to dns
+            host->dns->root->dns->TLD->dns->auth->dns->host(8 steps)
+        recursive:
+            after each step goes to prev step
+            host->dns->root->TLD->auth->TLD->root->dns->host(8 steps)
+        dns: dns resolver, sends ip address to host with the help of root, tld, auth
+        root name server: has child nodes such as .com, .mil, .edu, etc.
+        TLD server: has all the information about each domain name
+        authoritative name server: has the ip address and sends back
+    telnet: terminal network or telecommunication network, eg:anydesk
+        can be used to access remote server systems
+        allows to send commands, control the system just as if u were sitting at the console
+        operations: run program, create/delete files, etc.
+        adv: can be used on OS like windows, mac os, linux, etc., fast
+        disadv: no data encryption, sent as clear text
+            to solve this problem, SSH is used(security is increased now)
+    SMTP: simple mail transfer protocol, port no. 25
+        defines the message transfer agents(MTA) client and MTA server in internet
+        MTA client is used to send mail and MTA server is used to receive mail
+        mail client=MC; MC->MTA---->MTA->MC
+        POP3(post office protocol): port 110(default non-encrypted port), 995(secure connection)
+        MIME: multipurpose internet mail extensions, daily used, eg: img, audio, video, etc.
+    FTP: file transfer protocol, reliable, synchronous 
+        FTP uses services od TCP, port 21(control) and 20(data)
+        data connection is non-persistent but control connection is persistent
+        control connection: send commands/lines of response at a time
+        data connection: send data in blocks of bytes
+        FTP client and server are used to transfer files, also used to download/share files
+        stateful: server remembers the client
+        imagine we have FAT32 files, FTP will solve this(diff file systems issues)
+    WWW: world wide web
+        client: interprets and displays a web document
+        server: web page is stored at the server
+        uniform resource locator(URL): protocol://host:port/path
+        cookies: allows a server to store information on a client, no need to enter data again
+        web documents:
+            static pages: html, data for web page are formatted for interpretation by browser
+            dynamic: created by a web server, runs on a server and generates a web page
+                common gateway interface(CGI):
+                    creates and handles dynamic documents
+                    says how data are input and how result is used
+                    set of rules and terms that programmer must follow
+            active: need a program/script to be run at client side
+                server sends a copy of doc/script, doc is run at browser/client_side
+                java applets: program written in java on the server, it is compiled and ready to run
+                js: same as java applets but written in javascript
+    HTTP: hyper text transfer protocol
+        stateless: http doesn't remember anything about the client
+        used mainly to access data on the world wide web, port number 80
+        not self reliable but use TCP to make it reliable
+        HTTP 1.0 non-persistent: enter all details again when u reopen, eg:IRCTC page
+        HTTP 1.1 persistent: continue from where u left off, eg: Gmail
+        commands(head, get, post, put, delete, head, connect)
+    SNMP: simple network management protocol, manage/monitor networks
+        components: SNMP, SNMP agent, SNMP manager
+        commands: get, response, getnext, getbulk, set(resolve errors), trap(show faults)
+        SNMP agent: data collected and managed here
+        SNMP manager: control and understands and reacts to situations
+        manager information base(MIB): text file to store all transactions, .mib file
+        we are using SNMP3 because secure and remote access
+
+CHAPTER 2:
+    sockets and socket options:
+        sockets: allowing transmission of data bw two processes of same or diff machines in a network
+        socket is a combination of ip address and software port number, eg: 192.168.1.67:80
+        socket at server side:
+            socket(): establishing a socket
+            bind(): binding the socket to an address
+            listen(): listening client connections
+            accept(): accepting client connections
+            read() and write(): transmit data
+        socket at client side:
+            socket(): establishing a socket
+            connect(): connecting to the server address
+            read() and write(): transmit data
+            close(): close connection
+    getsockopt and setsockopt:
+        #include <sys/>socket.h>
+        int getsockopt(sockfd, level, optname, optval, optlen);
+        int setsockopt(sockfd, level, optname, optval, optlen);
+            both return 0 if ok, 1 on error
+    generic socket option:
+        SO_BROADCAST: enable/disable ability to send broadcast messages
+        SO_DEBUG: keep track of packets sent or received by TCP
+        SO_DONTROUTE: packets are to bypass normal routing
+        SO_ERROR: obtain value of so_error by fetching this socket option
+        SO_KEEPALIVE: if no data is sent for 2 hours, send a probe to check if connection is alive
+        SO_LINGER: specifies how the close function operates
+            by default close returns immediately
+            if there is any data, still in the socket buffer, it is sent to the peer
+    ipv4 socket option:
+        IP_HDRINC: building our own IP header for raw sockets datagrams
+        IP_OPTIONS: allows us to set IP option in the ipv4 header
+        IP_RECVDSTADDR: allows us to receive the destination address of the datagram
+        IP_RECVIF: allows us to receive the index of interface on which the datagram was received
+        IP_TOS: allows us to set the type of service field in the ipv4 header
+            IPTOS_LOWDELAY: low delay
+            IPTOS_THROUGHPUT: high throughput
+            IPTOS_RELIABILITY: high reliability
+            IPTOS_MINCOST: minimum cost
+        IP_TTL: allows us to set the time-to-live(TTL) field in the ipv4 header
+        icmpv6 socket option:
+            ICMP6_FILTER: allows us to filter out unwanted ICMPv6 messages
+    ipv6 socket option:
+        IPV6_ADDRFORM: socket to be converted from ipv4 to ipv6 or vice versa
+        IPV6_CHECKSUM: allows us to set the checksum field in the ipv6 header
+        IPV6_HOPOPTS: allows us to set the hop-by-hop options field in the ipv6 header
+        IPV6_HOPLIMIT: allows us to set the hop limit field in the ipv6 header
+        IPV6_NEXTMSG: allows us to receive the next message in the queue
+        IPV6_RTHDR: allows us to set the routing header field in the ipv6 header 
+        IPV6_UNICAST_HOPS: allows us to set the hop limit field in the ipv6 header
+    TCP socket option:
+        TCP_KEEPALIVE: if no data is sent for 2 hours, send a probe to check if connection is alive
+        TCP_MAXRT: maximum retransmission timeout
+        TCP_MAXSIZE: allows us to fetch/set the maximum segment size(MSS) for TCP
+        TCP_NODELAY: allows us to disable/enable Nagle's algorithm
+
+CHAPTER 3:
+    socket timeouts: three ways
+        i) generates SIGALRM before calling socket functions
+        ii) block waiting for socket functions to return
+        iii) set SO_RCVTIMEO and SO_SNDTIMEO socket options
+    recv and send:
+        #include <sys/socket.h>
+        ssize_t recv(int sockfd, void *buf, size_t len, int flags);
+        ssize_t send(int sockfd, const void *buf, size_t len, int flags);
+            both return number of bytes read/written, -1 on error
+            flags: MSG_OOB, MSG_PEEK, MSG_WAITALL
+    readv and writev:
+        #include <sys/uio.h>
+        ssize_t readv(int fd, const struct iovec *iov, int iovcnt);
+        ssize_t writev(int fd, const struct iovec *iov, int iovcnt);
+            both return number of bytes read/written, -1 on error
+            struct iovec{
+                void *iov_base; // starting address
+                size_t iov_len; // number of bytes to transfer
+            };
+            iovcnt: number of elements in the array
+    recvmsg and sendmsg:
+        #include <sys/socket.h>
+        ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
+        ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);
+            both return number of bytes read/written, -1 on error
+            struct msghdr{
+                void *msg_name; // optional address
+                socklen_t msg_namelen; // size of address
+                struct iovec *msg_iov; // scatter/gather array
+                int msg_iovlen; // # elements in msg_iov
+                void *msg_control; // ancillary data
+                socklen_t msg_controllen; // ancillary data buffer len
+                int msg_flags; // flags on received message
+            };
+            flags: MSG_OOB, MSG_PEEK, MSG_WAITALL
+    ancillary data:
+        ancillary data can be sent and received using msg control and msg controllen
+        another term for ancillary data is control information
+        struct cmsghdr{
+            socklen_t cmsg_len; // data byte count, including header
+            int cmsg_level; // originating protocol
+            int cmsg_type; // protocol-specific type
+            // followed by unsigned char cmsg_data[];
+        };
+    sockets and standard I/O:
+        another method for performing I/O is standard I/O library
+        #include <sys/socket.h>
+        FILE *fdopen(int fd, const char *type);
+            returns a pointer to a FILE structure, NULL on error
+            type: "r", "w", "a", "r+", "w+", "a+"
+        int fileno(FILE *stream);
+            returns the file descriptor associated with the stream, -1 on error
