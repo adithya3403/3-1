@@ -1,0 +1,88 @@
+CHAPTER 1:
+    flow and error control:
+        noiseless channels:
+            simplest:
+                no flow and error control
+                unidirectional protocol(Sender to receiver)
+                no acknowledgement, keeps on sending data only
+            stop and wait:
+                implements flow-control mechanism
+                sends one frame, waits for ACK, then only sends next frame
+        noisy:
+            stop and wait ARQ:
+                sequence numbers: bw 0 ot 2^m-1
+                acknowledgement numbers: sequence number of the next frame
+                some timeout timer is set, if ack is not received then retransmitted 
+            go-back-N ARQ: N=window size
+                can send several frames before receiving acknowledgements arrive
+                sliding window protocol, window size=4, window=0123
+                so after sending 0123, it gets ACK of 0 and then sends 4th frame, window=1234
+                gets ACK of 1 and then sends 5th frame, window=2345
+                suppose it doesn't get ACK of 2, then sends 2345 again
+                then gets ACK of 2, sends 6, window=3456
+            selective repeat ARQ:
+                better than go-back-N
+                sliding window protocol, window size=4, window=0123
+                so after sending 0123, it gets ACK of 0 and then sends 4th frame, window=1234
+                gets ACK of 1 and then sends 5th frame, window=2345
+                suppose it doesn't get ACK of 2, but gets ack of 3
+                it continues and there on doesn't use sliding window anywhere
+    HDLC:
+        high-level data link control(HDLC) is bit-oriented protocol
+        used for communication over point-to-point and multipoint links
+        frames: 3 types
+            information or I-frame: starts with 0
+            supervisory or S-frames: starts with 10
+            unnumbered or U-frame: starts with 11
+        format: [flag|address|control|data|CRC|flag] 
+    PPP: point-to-point protocol, byte-oriented protocol
+        format: [01111110|address|control|protocol|payload|checksum|01111110]
+
+CHAPTER 2:
+    medium access protocols:
+        bw 2 nodes, there is a shared medium
+        when 2 nodes send data at the same time, there occurs collision
+        below are the methods to prevent collision
+        random access protocols:
+            pure aloha: 
+                most basic model, collisions occur, throughput=S=G*e^(-2G)
+                no proper time for each node, vulnerable time=2Tfr
+            slotted aloha:
+                each station is given a slot, Smax=0.368 when G=1
+                can send a frame "only at the beginning of the time slot", reduces collisions
+            CSMA: carrier sense multiple access, "sense before transmit"
+                a) 1-persistent: continuously checks and if free, then sends
+                b) non-persistent: checks for random time period and if free, then sends
+                c) p-persistent: continuously checks, if free then checks time slot and then sends
+            CSMA/CD: carrier sense multiple access with collision detection
+                if two stations sense the channel to be idle and 
+                any two start sending at the same time, then both will detect
+                then they should stop their transmission as soon as it is detected
+                -> bw two frames, there is contention period and can transmit at that time
+                when no other stations are sending, it is idle period
+            CSMA/CA: carrier sense multiple access with collision avoidance
+                only in WIRELESS NETWORKS, collision avoidance is important here
+                avoid collision by beginning transmission only after channel is sensed idle
+                -> continuously checks. if idle, then interframe_space+contention time, then sends and timeout
+        controlled-access protocols:
+            reservation: similar to real life reservation
+                when s station wants to send, it makes reservation and can send only then
+            polling: select() and poll(), there is a master node
+                select(): master sends it's data and selects and asks a node to be ready
+                poll(): if master wants to receive data, it asks node to send
+            token passing:
+                whichever node wants to send data in the topology, has a token
+                only nodes with token can send their data, others can't
+        channelization: f->frequency, t->time, c->code, dma->division multiple access
+            FDMA: available bandwidth is divided into bands, separated by guard bands
+            TDMA: bandwidth is just one channel, timeshared bw diff stations
+            CDMA: one channel carries all transmissions (d1c1+d2c2+d3c3+d4c4)
+                multiply each node with another, we get 0
+                multiply each node with itself, we get number of stations(here 4)
+CHAPTER 3:
+    Ethernet:
+        standard(10mbps), fast(100mbps), gigabit(1gbps), ten-gigabit(10gpbs)
+        frame format: [preamble|SFD|dest_addr|source_addr|type|data|CRC], data=variable_size
+            preamble(7bytes), SFD(1byte), dest and source(6bytes), type(2bytes), CRC(4bytes)
+        addressing: 48bits/6bytes, hexadecimal notation with colon, eg: 06:01:02:01:2C:4B
+        types: unicast(last bit 0), multicast(last bit 1), broadcast(all bits 1) {for byte1}
