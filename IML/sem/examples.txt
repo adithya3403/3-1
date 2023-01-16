@@ -1,0 +1,47 @@
+UNIT1:
+    ML types:
+        supervised:
+            classification: medical imaging, credit scoring, pass/fail prediction
+            regression: house price prediction, price os used car, marks prediction
+        unsupervised:
+            clustering: customer segmentation
+            association: market analysis
+        semi-supervised:
+            classification: text-classification
+            clustering: lane-finding on GPS data
+        reinforcement: game playing, robot in a maze
+            classification: optimized marketing
+            control: driverless car
+
+    ML systems:
+        online learning: stock prices
+        batch learning: spam filter
+
+UNIT2:
+    types of data:
+        qualitative: language, colors, opinions
+            nominal: hair color, gender, nationality, eye color
+            ordinal: economic status(high medium low), ranking(1st 2nd 3rd), feedback(1-10)
+        quantitative: height, weight, time, marks
+            discrete: total number of students, days in a week, cost of phone
+            continuous: height, speed, time-taken
+                interval data: temp(in C and F), years(1297, 1976, 2020)
+                ratio data: age, temp(in K), income
+    causation: laptop runs out of battery -> shutdown + video player stops
+
+UNIT3:
+    regression: rain prediction, market trends, road accidents prediction
+    simple linear regression: physical activity vs weight loss
+    multiple linear regression: hours at gym, calories consumed, sugar intake vs weight loss
+    polynomial regression: death rate prediction, likes in social media
+
+UNIT4:
+    classification: cancerous tumor detection, music recommendation, spam detection
+    logistic regression: politician win/lose, student joining that clg/not, covid+/not
+    binary classification: spam mail, man or woman, pass or fail
+    multi-class classification: iris flower classification, handwritten digit classification
+
+UNIT5:
+    parametric: logistic regression, naive bayes, simple neural networks
+    non-parametric: kNN, decision trees, random forests, SVM
+    random forest: student X courses after 10+2 when confused of his choices
