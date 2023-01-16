@@ -1,0 +1,63 @@
+UNIT 5:
+    learning a function:
+        learning a function(f) that maps input(x) to output variables(y); y=f(x)
+        algorithm learns this from training data
+        our job is to evaluate different algorithms and see which is better 
+        two types: parametric and non-parametric
+    parametric:
+        learning model that summarizes data with a set of parameters of fixed size
+        it wont change its mind about how many parameters it needs
+        two steps:
+            select a form of the function
+            learn the coefficients for the function from training data
+            eg: b0+b1x1+b2x2=0
+                where b0, b1 and b2 are coefficients that control slope and intercept
+                and x1 and x2 are two input variables
+        examples: Logistic regression, naive bayes, simple neural networks
+        benefits of parametric algorithms: simpler, speed, less data for training
+        limitations: constrained, suited for simpler problems, poor fit
+    non-parametric:
+        these are good when u have lot of data and no prior knowledge
+        And when you don't want to worry too much about choosing the right features
+        they seek to best fit the training data in constructing the function
+        they are able to fit a large number of functional forms
+        examples: decision trees, k-nearest neighbors, support vector machines
+        benefits: flexibility, power, performance
+        limitations: more data, slower, overfitting
+    Decision Trees:
+        Introduction:
+            classification has 2 steps: learning and prediction
+            learning: build a model from training data
+            prediction: use the model to predict the class of unseen data
+            decision tree is a classification algorithm
+            Alg: supervised learning, mostly preferred for classification problems
+            in decision tree there are two nodes, decision node and leaf node
+            decision nodes are used to make any decision and leaf nodes are outputs
+            it is a graphical representation for getting all possible solutions
+            it asks a question and based on answer(yes/no) it splits into subtrees
+            why decision trees?
+                they mimic human thinking ability while making a decision
+                logic can be easily understood because of its tree like structure
+            terminologies:
+                root node: entire dataset, gets divided into two/more sets
+                leaf node: final output node, cant be divided further
+                splitting: dividing decision/root node into sub-nodes
+                branch/subtree: tree formed by splitting
+                pruning: removing unwanted branches from the tree
+                parent/child node: root node is parent, other nodes are children
+            we find best attribute using ASM(attribute selection measure)
+            algorithms: CART(gini index), ID3(entropy, information gain)
+        Entropy:
+        Gain ratio:
+        Information Gain:
+        Splitting criteria:
+    Ensemble Method:
+        Introduction to Random Forest:
+    Instance based learning:
+        Introduction:
+        KNN algorithm:
+        locally weighted regression:
+        radial basis functions:
+        SVM classifier:
+        hyper-plane:
+        kernel transformation:
