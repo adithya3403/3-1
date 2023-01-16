@@ -1,0 +1,125 @@
+UNIT 3:
+    what is regression?
+        relationship bw one dependent and series of other independent variables
+        eg: rain prediction, predicting road accidents, predicting stock prices
+        regression analysis:
+            statistical method to model the relationship bw a dependent and independent variables
+            it predicts continuous/real values such as temperature, age, salary, price
+        why do we use regression analysis?
+            helps in prediction of a continuous variable
+            eg: weather condition, sales prediction, marketing trends, etc.
+            we can determine the most important and least important factor and their effect 
+        applications of regression analysis:
+            formulation and determination of functional relationship bw two/more variables
+            helps in establishing cause and effect relationship
+            predicting and estimating the value of dependent variable
+            measure the variability or speed of values with respect to regression line
+    measure of linear relationship:
+        lets consider straight line equation: y=mx+c
+            where m=slope of line, c=constant, y=dependent variable, x=independent variable
+        least square method: 
+            practiced to find regression line/best-fit line for given pattern
+            this is used in evaluation and regression
+            m=sum[((x-xbar)(y-ybar))/(x-xbar)^2]
+            y=mx+c where y=mean of y and x=mean of x
+            c=y-mx, get intercept value
+            coefficient calculation:
+                draw table with 4 columns, they are: x, y, x^2, xy
+                find summation for each column
+                find m and b using the formula(slope and intercept)
+                substitute m and b in y=mx+b
+    Types of regression;
+        Simple Linear Regression: (house price prediction)
+            statistical regression method which us used for predictive analysis
+            shows the relationship bw two continuous variables
+            we have linear relationship between dependent and independent variables
+            if there is only one input(x) then it is called "simple linear regression"
+            single independent variable: y=a0+a1x
+            advantages: very easy to use, we get the best fit line
+            limitations: performance is not up to the mark, outliers, high correlation leads to poor performance
+            examples:
+                product sales prediction, insurance domain, montoring website click count, feature selection
+            code:
+                from scipy import stats
+                x=[1,2,3,4,5,6,7,8,9,10]
+                y=[2,4,6,8,10,12,14,16,18,20]
+                slope, intercept, r, p, std err=stats.linregress(x,y)
+                def myfunc(x):
+                    return slope*x+intercept
+                mymodel=list(map(myfunc,x))
+                plt.scatter(x,y)
+                plt.show()
+        Multi linear regression:
+            y=a0+a1x1+a2x2+a3x3+....+aixi
+                where y=dependent variable, xi=independent variables, a0=constant, ai=slopes
+            dependent variable is dependent on more than one independent variables
+            code:
+                from sklearn import linear_model
+                df=pandas.read_csv("file.csv")
+                X=df[['weight', 'volume']], y=df['co2']
+                reg=linear_model.LinearRegression()
+                reg.fit(X,y)
+                print(reg.predict([[2300,1300]]))
+        Polynomial Regression:
+            for non-linear data we ise Polynomial regression
+            eg: a0+a1x+a2x^2+a3x^3+....+anx^n, ai=coefficients
+            code:
+                x = [1,2,3,5,6,7,8,9,10,12,13,14,15,16,18,19,21,22]
+                y = [100,90,80,60,60,55,60,65,70,70,75,76,78,79,90,99,99,100]
+                mymodel = numpy.poly1d(numpy.polyfit(x, y, 3))
+                myline = numpy.linspace(1, 22, 100)
+                plt.scatter(x, y)
+                plt.plot(myline, mymodel(myline))
+        Logistic Regression:
+            used when we have to compute the probability of mutually exclusive occurrence
+            eg: true/false, pass/fail, yes/no, 0/1
+            when dependent variable is discrete, we use Logistic Regression
+            it can only take 2 values
+            sig(x)=1/(1+e^(-x)), e=2.718
+            sig(x): sigmoid function(value is bw 0 and 1)
+        Lasso Regression(L1 regression):
+            least absolute shrinkage and selection operator
+            also penalizes the absolute size of regression coefficients
+            can reduce the variability and improve accuracy of the linear regression model
+        Ridge Regression(L2 regression):
+            extension of linear regression that is used to minimize the loss
+            ridge solves the problem of multi-collinearity(independent variables are highly correlated)
+            ridge solves the problem through shrinking parameter, shrinks the value of coeff but not to zero
+        Underfitting:
+            model cannot fit the data well enough
+            this leads to low accuracy, unable to capture relationship, pattern in training data
+            can be avoided by using more data/optimizing parameters of the model
+        Overfitting:
+            opposite of underfitting
+            model predicts very well and is not able to predict well on test/validation data
+            reason: model could be memorizing the training data and is unable to generalize it
+            can be reduced by making feature selection/regularization techniques
+    Metrics for Regression:
+        MSE: mean squared error
+            MSE=sum((y-ybar)^2)/n, the square of diff bw actual and predicted values
+            as it squares, it penalizes even a small error which leads to over-estimate
+            preferred more than other metrics because it is differentiable
+        RMSE: root mean squared error
+            RMSE=sqrt(MSE)
+            RMSE is useful when large errors are undesired
+        MAE: mean absolute error
+            MAE=sum(|y-ybar|)/n, the absolute diff bw actual and predicted values
+            is more robust to outliers and does not penalize the errors as extremely as MSE
+            MAE is linear score: all individual diff are weighted equally
+            not suitable for applications where you want to pay attention to outliers
+    steps to perform regression analysis:
+        1. import libraries
+        2. import dataset
+        3. check for missing or NA values
+        4. check for descriptive statistical values
+        5. define dependent and independent variables
+        6. define the model and fit it
+        7. look at parameters of the model and interpret it
+        8. define our final regression equation 
+        9. visualize the regression equation
+        10. scatter plot visualization of actual vs predicted
+        11. final step to visualize the model performance against evaluation metrics
+    example: car price prediction, about cars in www.cardekho.com
+        link: https://github.com/adithya3403/3-1/blob/main/IML/UNIT3/cars_dekho.ipynb
+        
+
