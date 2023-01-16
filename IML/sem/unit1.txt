@@ -1,0 +1,75 @@
+UNIT 1:
+    What is Machine Learning:
+        science of programming computers so they can learn from data
+        field of study that gives computers the ability to learn without being explicitly programmed
+        definition of ML:
+            computer is said to learn from experience E with respect to some task T and performance measure P
+            if its performance on T, as measured by P, improves with experience E
+    Uses of Machine Learning:
+        learning is any process by which a system improves performance from experience
+        learning is used when:
+            human experts are not available, eg: navigating on mars
+            solution changes in time, eg:routing on computer network
+            solution needs to be adapted to cases, eg:biometrics
+    Types of Machine Learning Systems: supervised, unsupervised, semi-supervised, Reinforcement Learning
+        supervised learning:
+            algorithms are presented with instances from which they learn a way to classify
+            fully labeled data -> Machine -> ML model + test data -> predictions (labels)
+            two types:
+                classification: categorical target variable(credit scoring)
+                    for eg: animals -> alg -> model+(lion pic) -> output=lion
+                regression: continuous target variable(housing price)
+                    statistical procedure that determines the equation for straight line that best fits the data
+                    any line can be represented by equation y=bx+a, where b=slope, a=y_intercept
+        unsupervised learning: no output
+            learning what normally happens
+            clustering: grouping similar instances
+            fully unlabelled data -> machine -> results(clusters)
+            eg: animals -> alg -> groups of animals
+            example applications: customer segmentation, image compression, bioinformatics
+            two types: target variable not available
+                clustering: customer segmentation
+                association: market based analysis
+        semi-supervised: categorical target variable
+            small labeled -> ML model + large unlabeled -> pseudo-labeled -> ML model trained
+            two types:
+                classification: text classification
+                clustering: lane finding on gps data
+        Reinforcement Learning:
+            it is a learning policy: sequence of outputs
+            no supervised output but delayed reward
+            eg: credit assignment problem, game playing, robot in a maze
+            two types:
+                classification: categorical target variable(optimized marketing)
+                control: target variable not available(driverless car)
+              --------------->----------------
+              |  ------------>-------------  |
+              |  |        action a         | |
+            agent                     environment
+              |  |        reward rt        | |
+              |  -------------<------------  |
+              ----------------<---------------
+                          state st
+            eg: dog(sitting) ---state(action)--> dog(walks), so rewards biscuits
+    Differences among them:
+            supervised:     labeled data        direct feedback     predict outcome
+            unsupervised:   no labels           no feedback         find hidden structure
+            reinforcement:  decision process    reward system       learn series of action
+    Batch and Online Learning:
+        ML system -> incremental learning -> batch and online learning(two types)
+        batch learning:
+            learning over groups of patterns, most algorithms are batch
+            system is incapable of learning incrementally, all data is send at once ONLY
+            must be trained using all the available data, takes lot of time so done offline
+            it represents training of model at regular intervals like weekly, monthly, quarterly, etc.
+            if u want to change/improve, start all over again
+            also called as offline learning
+        online learning:
+            learning based on each pattern as it is observed
+            train the system incrementally by feeding data sequentially, either individually or small groups
+            great for systems that receive daa as continuous flow(eg: stock prices)
+            used where need to adapt to changing data quickly
+            training happens in an incremental manner by feeding as it arrives or in groups/batches
+            each step is fast and cheap, so done online
+    Main Challenges of Machine Learning:
+        not enough training data, irrelevant features, overfitting, underfitting, non-representative training data
