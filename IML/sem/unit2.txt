@@ -1,0 +1,108 @@
+UNIT 2:
+    types of data:
+        qualitative:
+            categorical data that cant be measured or counted in numbers
+            sorted by category, not by number
+            eg: gender(male, female, others) is qualitative
+            other eg: language we speak, colors, opinion(agree, disagree, neutral)
+            two types:
+                nominal: labels for existing data, eg: hair color, gender, nationality
+                ordinal: ranking data, eg: grades in exams, ranking 1st 2nd 3rd in exams
+        quantitative: also known as numeric data
+            can be expressed in numerical values, countable and statistical data analysis
+            can be represented on graphs and charts such as bar graphs, histograms
+            eg: height/weight, room temperature, scores/marks, time
+            two types:
+                discrete: countable data, eg: number of students, days in a week, cost of phone
+                continuous: data in fractional values, eg: height, weight, time, temperature
+        interval data: measurable and countable data, eg: temperature, time, age
+        ratio data: measurable, countable and has a true zero, eg: height, weight, age
+    central tendency:
+        descriptive statistics:
+            summarize the data through numbers like mean, median, mode, etc.
+            they represent the available data in a single number
+            measures of central tendency:
+                mean: arithmetic mean of dataset, mean=sum(x)/N, where N=no. of observations
+                median: middle number in sorted dataset
+                    if n is odd, median=(n+1/2)th obs
+                    if n is even, median=((n/2)th obs + (n/2+1)th obs)/2
+                mode: value that occurs most often, highest frequency
+            measures of dispersion:
+                range: amount bw smallest and largest items in the set
+                variance: sigma^2=sum((xi-xmean)^2)/N-1 for sample, N for population
+                    it gives users idea of how spread the data is
+                    high variance means very spread out from mean
+                    low means very close to mean
+                standard deviation: sigma=SD=sqrt(variance)=sqrt(sum((xi-xmean)^2)/N-1)
+                    tells how tightly their data is clustered around mean
+                    low SD means clustered around mean, high means spread out
+                mean absolute deviation: MAD=sum(|xi-mean|)/N
+                    avg distance bw each point and mean of data
+    finding the percentile:
+    inter quartile range(IQR): indicates variability, IQR=Q3-Q1
+        divides dataset into quartiles(4 parts)
+        first quartile, Q1: median of lower half of data/25th percentile
+        second quartile, Q2: median of entire dataset/50th percentile
+        third quartile, Q3: median of upper half of data/75th percentile
+    Box Plot: type of graph that help visualize five number summary
+        five number summary=(min, Q1, median, Q3, max)
+        ideal for comparing distributions of data
+        Q1=lower quartile, Q3=upper quartile, IQR=Q3-Q1
+    Outlier: data points that are far away from other data points
+        can be caused by measurement error, data entry error, or rare events
+        can be removed or replaced with median
+        anything above Q3+1.5*IQR or below Q1-1.5*IQR is an outlier
+    calculating:
+        covariance: cov(x, y)=sum((x-xmean)*(y-ymean))/N
+            signifies direction of linear relationship bw teo variables
+            it means either directly proportional or inversely proportional
+            if cov(x, y)<0 then x and y are inversely proportional
+            if cov(x, y)>0 then x and y are directly proportional
+            if cov(x, y)=0 then x and y are not related
+        correlation: lies bw -1 and 1
+            used to study strength of relationship bw two continuous variables
+            corr= cov(x, y)/(SD(x)*SD(y)), this is called correlation coefficient
+            three types:
+                positive: increase in A -> increase in B or vice-versa
+                negative: increase in A -> decrease in B or vice-versa
+                no correlation: unrelated and doesn't change others
+        causation:
+            changes in one variable brings changes in other variable
+            there is a cause-and-effect relationship
+            eg: laptop runs out of battery --causation--> [shuts down <---correlation--> video player stops]
+    Data preprocessing:
+        technique used to transform raw data in useful and efficient format, stpes:
+            data cleaning:
+                missing data: ignore tuples, fill missing values manually/computer
+                noisy data: binning, regression, clustering
+            data transformation:
+                normalization: scale the data values in range(-1 to 1 or 0 to 1)
+                attribute selection: new attributes are constructed from given set
+                discretization: replace the raw values by interval/conceptual levels
+                concept hierarchy generation: converted from lower to higher levels, eg:city->country
+            data reduction:
+                size of data can be too large to handle
+                one sol is to reduce the size of data but still retain the important info
+                data cube aggregation: summarize data by grouping into categories
+                numerosity reduction: represent as model/equation like regression model
+                attribute subset selection: only attributes which add high value must be considered
+                dimensionality reduction: reduce number of redundant features in ML algos
+    Data visualization: graphical representation
+        bar graph:
+            used to show something that changes over time and to compare items
+            plt.bar([1,2,3,4,5],[45,50,55,60,65])
+        histogram:
+            graphic display of data using bars
+            this is continuous type of chart
+            x=[1,2,3,4,5,6,7,8,9,10,11,12], num_bins=4
+            plt.hist(x, num_bins)
+        scatter plot:
+            uses dots to represent values for two different numeric variables
+            used to observer relationships bw variables
+            x=[1,2,3,4,5,6], y=[5,10,15,20,23,30]
+            plt.scatter(x,y)
+        pie chart:
+            circular statistical graphic, divided into slices to show numerical proportion
+            arc length of each slice is proportional to the quantity it represents
+            st=[1,2,3,4,5], labels=['a','b','c','d','e']
+            plt.pie(st, labels=labels)
